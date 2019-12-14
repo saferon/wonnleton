@@ -9,6 +9,7 @@
   "author": "saferon",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^11.5.1"
+    "discord.js": "^11.5.1",
+    "recursive-readdir": "^2.2.2"
   }
 }
