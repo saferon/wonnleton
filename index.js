@@ -192,7 +192,7 @@ bot.on('message', async msg => {
   let apAdd = (Math.random() * (0.120 - 0.0200) + 0.0200).toFixed(4);
   if (!AP[msg.author.id]) {
     AP[msg.author.id] = {
-      ap: 0.0000
+      ap: 0
     };
   };
 
