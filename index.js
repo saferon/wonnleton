@@ -192,12 +192,12 @@ bot.on('message', async msg => {
   let apAdd = Math.floor(Math.random() * 3) + 3;
   if (!AP[msg.author.id]) {
     AP[msg.author.id] = {
-      ap: 0
+      AP: 0
     };
   };
 
-  let currentAP = AP[msg.author.id].ap;
-  AP[msg.author.id].ap = currentAP + apAdd
+  let currentAP = AP[msg.author.id].AP;
+  AP[msg.author.id].AP = currentAP + apAdd;
 
   fs.writeFile("./AP.json", JSON.stringify(AP), (err) => {
     if (err) console.log(err)
