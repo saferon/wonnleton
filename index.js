@@ -10,38 +10,37 @@ const bot = new Discord.Client();
 const imagePath = "/media/pi/8A02-DF82/lindas/";
 const songPath = "/media/pi/8A02-DF82/songs/";
 
-// var leveling = require('discord-leveling')
 let xp = require("./xp.json");
-// const eco = require("discord-economy");
 
+let AP = require("./AP.json");
 
 bot.on("ready", () => {
   console.log("WONNLETON HAS RISEN");
 });
 
 bot.on("message", msg => {
-  if (msg.content.startsWith("!linda ")) {
-    try {
-      var linda = msg.content.split(" ")[1];
-      var files = fs.readdirSync(imagePath + linda);
-      var randomLinda = files[randomIndex(files.length)];
-      console.log("-------------------------");
-      console.log("requested a(n) " + linda);
-      console.log(randomLinda);
-      msg.reply("", {
-        files: [imagePath + linda + "/" + randomLinda]
-      });
-    } catch {
-      msg.reply("that aint the raw");
-    }
-  } else if (msg.content.startsWith("wlt ")) {
-    var wltNum = msg.content.split(" ")[1];
-    if (wltNum <= 0 || wltNum > wlt.length) {
-      msg.reply("Please enter a valid WLT.");
-    } else {
-      msg.reply(wlt[wltNum - 1]);
-    }
-  }
+  // if (msg.content.startsWith("!linda ")) {
+  //   try {
+  //     var linda = msg.content.split(" ")[1];
+  //     var files = fs.readdirSync(imagePath + linda);
+  //     var randomLinda = files[randomIndex(files.length)];
+  //     console.log("-------------------------");
+  //     console.log("requested a(n) " + linda);
+  //     console.log(randomLinda);
+  //     msg.reply("", {
+  //       files: [imagePath + linda + "/" + randomLinda]
+  //     });
+  //   } catch {
+  //     msg.reply("that aint the raw");
+  //   }
+  // } else if (msg.content.startsWith("wlt ")) {
+  //   var wltNum = msg.content.split(" ")[1];
+  //   if (wltNum <= 0 || wltNum > wlt.length) {
+  //     msg.reply("Please enter a valid WLT.");
+  //   } else {
+  //     msg.reply(wlt[wltNum - 1]);
+  //   }
+  // }
   if (msg.content.includes("cheers")) {
     msg.channel.send("Aye. Cheers.");
   }
@@ -56,82 +55,82 @@ bot.on("message", msg => {
       msg.reply("crinje*");
       break;
 
-    case "wlt":
-      msg.reply(wlt[randomIndex(wlt.length)]);
-      break;
+    // case "wlt":
+    //   msg.reply(wlt[randomIndex(wlt.length)]);
+    //   break;
 
-    case "!randomlinda":
-      var lindaList = fs.readdirSync(imagePath);
-      var index = lindaList.indexOf("desktop.ini");
-      lindaList.splice(index, 1);
-      var randomFolder = randomIndex(lindaList.length);
-      var chosenFolder = fs.readdirSync(imagePath + lindaList[randomFolder]);
-      var lindaFolder = randomIndex(chosenFolder.length);
-      console.log("-------------------------");
-      console.log("sent out a(n) " + lindaList[randomFolder]);
-      console.log(chosenFolder[lindaFolder]);
-      msg.channel.send(lindaList[randomFolder] + "!", {
-        files: [
-          imagePath + lindaList[randomFolder] + "/" + chosenFolder[lindaFolder]
-        ]
-      });
-      break;
+    // case "!randomlinda":
+    //   var lindaList = fs.readdirSync(imagePath);
+    //   var index = lindaList.indexOf("desktop.ini");
+    //   lindaList.splice(index, 1);
+    //   var randomFolder = randomIndex(lindaList.length);
+    //   var chosenFolder = fs.readdirSync(imagePath + lindaList[randomFolder]);
+    //   var lindaFolder = randomIndex(chosenFolder.length);
+    //   console.log("-------------------------");
+    //   console.log("sent out a(n) " + lindaList[randomFolder]);
+    //   console.log(chosenFolder[lindaFolder]);
+    //   msg.channel.send(lindaList[randomFolder] + "!", {
+    //     files: [
+    //       imagePath + lindaList[randomFolder] + "/" + chosenFolder[lindaFolder]
+    //     ]
+    //   });
+    //   break;
 
-    case "!lindas":
-      var lindaList = fs.readdirSync(imagePath);
-      var index = lindaList.indexOf("desktop.ini");
-      lindaList.splice(index, 1);
-      var lindaArray = listSort(lindaList);
-      for (var i = 0; i < lindaArray.length; i++) {
-        msg.author.send("```" + lindaArray[i] + "```");
-      }
-      break;
+    // case "!lindas":
+    //   var lindaList = fs.readdirSync(imagePath);
+    //   var index = lindaList.indexOf("desktop.ini");
+    //   lindaList.splice(index, 1);
+    //   var lindaArray = listSort(lindaList);
+    //   for (var i = 0; i < lindaArray.length; i++) {
+    //     msg.author.send("```" + lindaArray[i] + "```");
+    //   }
+    //   break;
 
-    case "!help":
-      msg.author.send(help);
-      break;
+    // case "!help":
+    //   msg.author.send(help);
+    //   break;
 
-    case "!darien":
-      if (msg.member.voiceChannel) {
-        msg.member.voiceChannel.join().then(connection => {
-          var playAudio = connection.playFile(
-            "/home/pi/Downloads/Darien_Throat_Clear.wav"
-          );
-          setTimeout(function() {
-            msg.member.voiceChannel.leave();
-          }, 3000);
-        });
-      } else {
-        msg.channel.send("Not in a channel mate.");
-      }
-      break;
+    // case "!darien":
+    //   if (msg.member.voiceChannel) {
+    //     msg.member.voiceChannel.join().then(connection => {
+    //       var playAudio = connection.playFile(
+    //         "/home/pi/Downloads/Darien_Throat_Clear.wav"
+    //       );
+    //       setTimeout(function() {
+    //         msg.member.voiceChannel.leave();
+    //       }, 3000);
+    //     });
+    //   } else {
+    //     msg.channel.send("Not in a channel mate.");
+    //   }
+    //   break;
 
-    case "!song":
-      var songList = fs.readdirSync(songPath);
-      var index = songList.indexOf("desktop.ini");
-      songList.splice(index, 1);
-      var randomFolder = randomIndex(songList.length);
-      var chosenFolder = fs.readdirSync(songPath + songList[randomFolder]);
-      var songFolder = randomIndex(chosenFolder.length);
-      console.log("-------------------------");
-      console.log("playing from album " + songList[randomFolder]);
-      console.log(chosenFolder[songFolder]);
-      if (msg.member.voiceChannel) {
-        msg.member.voiceChannel.join().then(connection => {
-          var playAudio = connection.playFile(
-            songPath + songList[randomFolder] + "/" + chosenFolder[songFolder]
-          );
-          msg.channel.send(
-            "Now playing: " +
-              songList[randomFolder] +
-              " - " +
-              chosenFolder[songFolder]
-          );
-        });
-      } else {
-        msg.channel.send("Not in a channel mate.");
-      }
-      break;
+//     case "!song":
+//       var songList = fs.readdirSync(songPath);
+//       var index = songList.indexOf("desktop.ini");
+//       songList.splice(index, 1);
+//       var randomFolder = randomIndex(songList.length);
+//       var chosenFolder = fs.readdirSync(songPath + songList[randomFolder]);
+//       var songFolder = randomIndex(chosenFolder.length);
+//       console.log("-------------------------");
+//       console.log("playing from album " + songList[randomFolder]);
+//       console.log(chosenFolder[songFolder]);
+//       if (msg.member.voiceChannel) {
+//         msg.member.voiceChannel.join().then(connection => {
+//           var playAudio = connection.playFile(
+//             songPath + songList[randomFolder] + "/" + chosenFolder[songFolder]
+//           );
+//           msg.channel.send(
+//             "Now playing: " +
+//               songList[randomFolder] +
+//               " - " +
+//               chosenFolder[songFolder]
+//           );
+//         });
+//       } else {
+//         msg.channel.send("Not in a channel mate.");
+//       }
+//       break;
   }
 });
 
@@ -169,7 +168,7 @@ bot.on('message', async msg => {
       xp: 0,
       level: 1
     };
-  }
+  };
 
   let currentXP = xp[msg.author.id].xp;
   let currentLevel = xp[msg.author.id].level;
@@ -189,19 +188,136 @@ bot.on('message', async msg => {
   fs.writeFile("./xp.json", JSON.stringify(xp), (err) =>{
     if(err) console.log(err)
   });
-///////////////////////////////////////////////////////////////////////////
+//profile thing/////////////////////////////////////////////////////////////////////
 
-  if (command === 'level') {
+  if (command === 'profile') {
     let levelEmbed = new Discord.RichEmbed()
     .setAuthor(msg.author.username)
     .addField("Level", currentLevel, true)
     .addField("XP", currentXP, true)
+    .addField("AP Coin", currentAP, true)
     .setFooter(`${untilNextLevel} XP until level up`, msg.author.displayAvatarURL);
 
     msg.channel.send(levelEmbed)
 
   };
+///////////////////////////////////////////////////////////////////////////
+//AP coins////////////////////////////////////////////////////////////////////////
+  let apAdd = (Math.random() * (0.120 - 0.0200) + 0.0200).toFixed(4);
+  if (!AP[msg.author.id]) {
+    AP[msg.author.id] = {
+      ap: 0.0000
+    };
+  };
+
+  let currentAP = AP[msg.author.id].ap;
+  AP[msg.author.id].ap = currentAP + apAdd
+//linda stuff////////////////////////////////////////////////////
+  if (command === 'linda') {
+    try {
+      var files = fs.readdirSync(imagePath + args);
+      var randomLinda = files[randomIndex(files.length)];
+      console.log("------------------------------") // 30 -
+      console.log("requested a rare " + args)
+      console.log(randomLinda);
+      msg.reply("", {
+        files: [imagePath + args + "/" + randomLinda]
+      });
+    } catch {
+      msg.reply("That ain't the raw...") 
+    }
+  };
+
+  if (command === 'randomlinda') {
+    var lindaList = fs.readdirSync(imagePath);
+    var index = lindaList.indexOf("desktop.ini");
+    lindaList.splice(index, 1);
+    var randomFolder = randomIndex(lindaList.length);
+    var chosenFolder = fs.readdirSync(imagePath + lindaList[randomFolder]);
+    var lindaFolder = randomIndex(chosenFolder.length);
+    console.log("-------------------------");
+    console.log("sent out a(n) " + lindaList[randomFolder]);
+    console.log(chosenFolder[lindaFolder]);
+    msg.channel.send(lindaList[randomFolder] + "!", {
+      files: [
+        imagePath + lindaList[randomFolder] + "/" + chosenFolder[lindaFolder]
+      ]
+    })
+  };
+
+  if (command === 'lindas') {
+    var lindaList = fs.readdirSync(imagePath);
+    var index = lindaList.indexOf("desktop.ini");
+    lindaList.splice(index, 1);
+    var lindaArray = listSort(lindaList);
+    for (var i = 0; i < lindaArray.length; i++) {
+      msg.author.send("```" + lindaArray[i] + "```");
+    }
+  };
+///////////////////////////////////////////////////////////////////////////
+//wlt stuff////////////////////////////////////////////////////
+  if (command === 'wlt') {
+    if (!args) {
+      msg.reply(wlt[randomIndex(wlt.length)]);
+    }
+    else if (args <= 0 || args > wlt.length) {
+      msg.reply("Please enter a valid WLT.");
+    } else {
+      msg.reply(wlt[args - 1]);
+    }
+  };
+///////////////////////////////////////////////////////////////////////////
+//help stuff////////////////////////////////////////////////////
+  if (command === 'help') {
+    msg.author.send(help);
+  };
+///////////////////////////////////////////////////////////////////////////
+//for fun////////////////////////////////////////////////////
+  if (command === 'darien') {
+    if (msg.member.voiceChannel) {
+      msg.member.voiceChannel.join().then(connection => {
+        var playAudio = connection.playFile(
+          "/home/pi/Downloads/Darien_Throat_Clear.wav"
+        );
+        setTimeout(function() {
+          msg.member.voiceChannel.leave();
+        }, 3000);
+      });
+    } else {
+      msg.channel.send("Not in a channel mate.");
+    }
+  };
+///////////////////////////////////////////////////////////////////////////
+//music stuff////////////////////////////////////////////////////
+// this needs a lot of work lmfao
+  if (command === 'song') {
+    var songList = fs.readdirSync(songPath);
+    var index = songList.indexOf("desktop.ini");
+    songList.splice(index, 1);
+    var randomFolder = randomIndex(songList.length);
+    var chosenFolder = fs.readdirSync(songPath + songList[randomFolder]);
+    var songFolder = randomIndex(chosenFolder.length);
+    console.log("-------------------------");
+    console.log("playing from album " + songList[randomFolder]);
+    console.log(chosenFolder[songFolder]);
+    if (msg.member.voiceChannel) {
+      msg.member.voiceChannel.join().then(connection => {
+        var playAudio = connection.playFile(
+          songPath + songList[randomFolder] + "/" + chosenFolder[songFolder]
+        );
+        msg.channel.send(
+          "Now playing: " +
+            songList[randomFolder] +
+            " - " +
+            chosenFolder[songFolder]
+        );
+      });
+    } else {
+      msg.channel.send("Not in a channel mate.");
+    }
+  };
 })
+///////////////////////////////////////////////////////////////////////////
 
 // bot.on('message', async message => {
 //   //This reads the first part of your message behind your prefix to see which command you want to use.
