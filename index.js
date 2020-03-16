@@ -230,7 +230,9 @@ bot.on('message', async msg => {
         } catch {
           msg.reply("That ain't the raw... no content.")
         }
+      }
   };
+
 
   if (command === 'randomlinda') {
     var lindaList = fs.readdirSync(imagePath);
@@ -320,7 +322,7 @@ bot.on('message', async msg => {
       msg.channel.send("Not in a channel mate.");
     }
   };
-})
+});
 ///////////////////////////////////////////////////////////////////////////
 
 // bot.on('message', async message => {
