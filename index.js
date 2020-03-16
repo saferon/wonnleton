@@ -198,6 +198,10 @@ bot.on('message', async msg => {
 
   let currentAP = AP[msg.author.id].ap;
   AP[msg.author.id].ap = currentAP + apAdd
+
+  fs.writeFile("./AP.json", JSON.stringify(AP), (err) => {
+    if (err) console.log(err)
+  });
 //////////////////////////////////////////////////////
 //profile thing/////////////////////////////////////////////////////////////////////
 
