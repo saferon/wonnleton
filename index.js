@@ -178,7 +178,7 @@ bot.on('message', async msg => {
   if(nextLevel <= xp[msg.author.id].xp){
     xp[msg.author.id].level = currentLevel + 1;
     let levelUp = new Discord.RichEmbed()
-    .setTitle.levelUp("Level Up!")
+    .setTitle("Level Up!")
     .addField("New Level", currentLevel + 1)
     .setFooter(`${untilNextLevel} XP until level up`, msg.author.displayAvatarURL);
 
