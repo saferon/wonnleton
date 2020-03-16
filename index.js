@@ -188,6 +188,17 @@ bot.on('message', async msg => {
   fs.writeFile("./xp.json", JSON.stringify(xp), (err) =>{
     if(err) console.log(err)
   });
+//AP coins////////////////////////////////////////////////////////////////////////
+  let apAdd = (Math.random() * (0.120 - 0.0200) + 0.0200).toFixed(4);
+  if (!AP[msg.author.id]) {
+    AP[msg.author.id] = {
+      ap: 0.0000
+    };
+  };
+
+  let currentAP = AP[msg.author.id].ap;
+  AP[msg.author.id].ap = currentAP + apAdd
+//////////////////////////////////////////////////////
 //profile thing/////////////////////////////////////////////////////////////////////
 
   if (command === 'profile') {
@@ -201,31 +212,24 @@ bot.on('message', async msg => {
     msg.channel.send(levelEmbed)
 
   };
-///////////////////////////////////////////////////////////////////////////
-//AP coins////////////////////////////////////////////////////////////////////////
-  let apAdd = (Math.random() * (0.120 - 0.0200) + 0.0200).toFixed(4);
-  if (!AP[msg.author.id]) {
-    AP[msg.author.id] = {
-      ap: 0.0000
-    };
-  };
+/////Linda Stuff//////////////////////////////////////////////////////////////////////
 
-  let currentAP = AP[msg.author.id].ap;
-  AP[msg.author.id].ap = currentAP + apAdd
-//linda stuff////////////////////////////////////////////////////
   if (command === 'linda') {
-    try {
-      var files = fs.readdirSync(imagePath + args);
-      var randomLinda = files[randomIndex(files.length)];
-      console.log("------------------------------") // 30 -
-      console.log("requested a rare " + args)
-      console.log(randomLinda);
-      msg.reply("", {
-        files: [imagePath + args + "/" + randomLinda]
-      });
-    } catch {
-      msg.reply("That ain't the raw...") 
-    }
+      if (!args) {
+        msg.reply("That ain't the raw... add some content.")
+      } else {
+        try {
+          var files = fs.readdirSync(imagePath + args);
+          var randomLinda = files[randomIndex(files.length)];
+          console.log("------------------------------") // 30 -
+          console.log("requested a rare " + args)
+          console.log(randomLinda);
+          msg.reply("", {
+            files: [imagePath + args + "/" + randomLinda]
+          });
+        } catch {
+          msg.reply("That ain't the raw... no content.")
+        }
   };
 
   if (command === 'randomlinda') {
