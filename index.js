@@ -189,7 +189,7 @@ bot.on('message', async msg => {
     if(err) console.log(err)
   });
 //AP coins////////////////////////////////////////////////////////////////////////
-  let apAdd = (Math.random() * (0.120 - 0.0200) + 0.0200).toFixed(4);
+  let apAdd = Math.floor(Math.random() * 3) + 3;
   if (!AP[msg.author.id]) {
     AP[msg.author.id] = {
       ap: 0
