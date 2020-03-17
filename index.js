@@ -167,7 +167,7 @@ bot.on('message', async msg => {
     if (args.length === 0) {
       msg.reply(wlt[randomIndex(wlt.length)]);
     }
-    else if (args <= 0 || args > wlt.length) {
+    else if (args[0] <= 0 || args[0] > wlt.length) {
       msg.reply("Please enter a valid WLT.");
     } else {
       msg.reply(wlt[args - 1]);
@@ -188,7 +188,7 @@ bot.on('message', async msg => {
         );
         setTimeout(function() {
           msg.member.voiceChannel.leave();
-        }, 3000);
+        }, 10000);
       });
     } else {
       msg.channel.send("Not in a channel mate.");
@@ -208,8 +208,8 @@ bot.on('message', async msg => {
     msg.reply("crinje*")
   }
 //////////////////////////////////////////////////////////////////////////////////
-//music stuff/////////////////////////////////////////////////////////////////////
-// this needs a lot of work lmfao
+// music stuff ///////////////////////////////////////////////////////////////////
+// this needs a lot of work lmfao ////////////////////////////////////////////////
   if (command === 'song') {
     var songList = fs.readdirSync(songPath);
     var index = songList.indexOf("desktop.ini");
@@ -236,7 +236,73 @@ bot.on('message', async msg => {
       msg.channel.send("Not in a channel mate.");
     }
   };
+
+  if (command === 'craps') {
+
+  var amount = args[0]; //Coins to gamble
+
+  if (!amount) return msg.reply('Specify the amount of AP you want to gamble.');
+
+  var output = AP[msg.author.id].AP;
+  if (output < amount) return msg.reply("You don't have enough AP to gamble.")
+    // 7 or 11 win instantly
+    // 2 3 12 lose instantly
+    // point get for other rolls eg 5
+    // if u roll 5 again, you win
+    // if u roll 7 then you lose
+  var rollList = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  var roll = rollList[Math.floor(Math.random() * rollList.length)];
+  var winnings = amount * 2;
+  msg.reply("You threw down " + amount + " AP coin, for a chance to win " + winnings + "AP coin.")
+  msg.channel.send("You rolled " + roll);
+  if (roll === 7 || 11) {
+    msg.channel.send("Bill it up, you gained " + winnings + " AP coin.");
+    AP[msg.author.id].AP = output + winnings;
+  } else if (roll === 2 || 3 || 12) {
+    msg.channel.send("You man lost " + amount + " AP coin.");
+    AP[msg.author.id].AP = output - amount;
+    msg.channel.send("You now have " + output + " AP coin.");
+  } else {
+    while (rolls != roll) {
+    msg.channel.send("Rolling again.");
+    rolls = rollList[Math.floor(Math.random() * rollList.length)];
+    msg.channel.send("Rolled " + rolls + ".");
+    if (rolls === 7) {
+      msg.channel.send("You've rolled a 7 and lost.");
+      AP[msg.author.id].AP = output - amount;
+      msg.channel.send("You now have " + output + " AP coin.");
+      break;
+    }
+    if (rolls === roll) {
+      msg.channel.send("You've rolled another" + roll + ". You win.");
+      AP[msg.author.id].AP = output + winnings;
+      msg.channel.send("You now have " + output + " AP coin.");
+      break;
+    }
+    } 
+  }
+  
+
+  };
+
+  if (command === 'ot') { 
+
+    var output = await eco.Work(message.author.id, {
+      failurerate: 10,
+      money: Math.floor(Math.random() * 500),
+      jobs: ['mad ute', 'drilla', 'trapper', 'investor']
+    })
+    //10% chance to fail and earn nothing. You earn between 1-500 coins. And you get one of those 3 random jobs.
+    if (output.earned == 0) return message.reply('you went OT but you got chinged up...')
+ 
+    message.channel.send(`${message.author.username}
+You worked as a \` ${output.job} \` and earned :money_with_wings: ${output.earned}
+You now own :money_with_wings: ${output.balance}`)
+ 
+  };
 });
+
+
 
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
@@ -358,38 +424,6 @@ bot.on('message', async msg => {
  
 //     var gamble = await eco.Coinflip(message.author.id, flip, amount).catch(console.error)
 //     message.reply(`You ${gamble.output}! New balance: ${gamble.newbalance}`)
- 
-//   }
- 
-//   if (command === 'craps') {
- 
-//     var roll = args[0] //Should be a number between 1 and 6
-//     var amount = args[1] //Coins to gamble
- 
-//     if (!roll || ![1, 2, 3, 4, 5, 6].includes(parseInt(roll))) return message.reply('Specify the roll, it should be a number between 1-6')
-//     if (!amount) return message.reply('Specify the amount you want to gamble!')
- 
-//     var output = eco.FetchBalance(message.author.id)
-//     if (output.balance < amount) return message.reply('You have fewer coins than the amount you want to gamble!')
- 
-//     var gamble = await eco.Dice(message.author.id, roll, amount).catch(console.error)
-//     message.reply(`The dice rolled ${gamble.dice}. So you ${gamble.output}! New balance: ${gamble.newbalance}`)
- 
-//   }
-
-//   if (command === 'ot') { 
-
-//     var output = await eco.Work(message.author.id, {
-//       failurerate: 10,
-//       money: Math.floor(Math.random() * 500),
-//       jobs: ['mad ute', 'drilla', 'trapper', 'investor']
-//     })
-//     //10% chance to fail and earn nothing. You earn between 1-500 coins. And you get one of those 3 random jobs.
-//     if (output.earned == 0) return message.reply('you went OT but you got chinged up...')
- 
-//     message.channel.send(`${message.author.username}
-// You worked as a \` ${output.job} \` and earned :money_with_wings: ${output.earned}
-// You now own :money_with_wings: ${output.balance}`)
  
 //   }
  
