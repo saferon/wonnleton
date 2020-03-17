@@ -15,6 +15,8 @@ const songPath = "/media/pi/8A02-DF82/songs/";
 let xp = require("./xp.json");
 let AP = require("./AP.json");
 
+let APCoinEmoji = "627897331068436481";
+
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -200,13 +202,18 @@ bot.on('message', async msg => {
   };
 
   if (msg.content.includes("spicy")) {
+    msg.react("🌶️")
     msg.channel.send("ไม่เผ็ดไม่กิน");
   };
 
   if (msg.content.includes("cringe")) {
     msg.react("😬")
     msg.reply("crinje*")
-  }
+  };
+
+  if (msg.content.includes("AP")) {
+    msg.react(APCoinEmoji)
+  };
 //////////////////////////////////////////////////////////////////////////////////
 // music stuff ///////////////////////////////////////////////////////////////////
 // this needs a lot of work lmfao ////////////////////////////////////////////////
@@ -284,8 +291,6 @@ bot.on('message', async msg => {
       }
     } 
   }
-  
-
   };
 
   if (command === 'ot') { 
@@ -338,18 +343,33 @@ bot.on('message', async msg => {
         msg.channel.send("You lost " + pay + " AP coin.")
       }     
     }
-    //10% chance to fail and earn nothing. You earn between 1-500 AP coin. 
-    // And you get one of those 3 random jobs.
-//     if (output.earned == 0) return message.reply('you went OT but you got chinged up...')
- 
-//     message.channel.send(`${message.author.username}
-// You worked as a \` ${output.job} \` and earned :money_with_wings: ${output.earned}
-// You now own :money_with_wings: ${output.balance}`)
- 
   };
+
+    if (command === 'coinflip') {
+ 
+    var flip = args[0] //Heads or Tails
+    var amount = args[1] //Coins to gamble
+    var winnings = amount * 2
+    // check if input is correct
+    if (!flip || !['heads', 'tails'].includes(flip)) return message.reply('Please specify the flip, either heads or tails!')
+    if (!amount) return message.reply('Specify the amount you want to gamble!')
+    if (AP[msg.author.id].AP < amount) return message.reply("You don't have enough AP to gamble.")
+    // setup game
+    var tossChoices = ['heads', 'tails']
+    var toss = tossChoices[Math.floor(Math.random() * tossChoices.length)]
+    msg.reply("You've bet " + amount + " AP coin that it will be " + flip + ". If you win, you will get " + amount + "AP coin.")
+    if (flip === toss) {
+      msg.channel.send("It is " + toss + " you've won!")
+      AP[msg.author.id].AP = AP[msg.author.id].AP + winnings
+      msg.channel.send("You now have " + AP[msg.author.id].AP + "AP coin.")
+    } else {
+      msg.channel.send("It is " + toss + " you lose!")
+      AP[msg.author.id].AP = AP[msg.author.id].AP - amount
+      msg.channel.send("You now have " + AP[msg.author.id].AP + "AP coin.")
+    }
+  };
+ 
 });
-
-
 
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
@@ -398,12 +418,6 @@ bot.on('message', async msg => {
 //       })
 
 //     }
-//   }
-
-//   if (command === 'balance') {
- 
-//     var output = await eco.FetchBalance(message.author.id)
-//     message.channel.send(`Hey ${message.author.tag}! You have ${output.balance} AP coins.`);
 //   }
 
 //   if (command === 'investors') {
@@ -458,20 +472,6 @@ bot.on('message', async msg => {
 //     message.reply(`AP coins successfully transfered!\nBalance from ${message.author.tag}: ${transfer.FromUser}\nBalance from ${user.tag}: ${transfer.ToUser}`);
 //   }
  
-//   if (command === 'coinflip') {
- 
-//     var flip = args[0] //Heads or Tails
-//     var amount = args[1] //Coins to gamble
- 
-//     if (!flip || !['heads', 'tails'].includes(flip)) return message.reply('Please specify the flip, either heads or tails!')
-//     if (!amount) return message.reply('Specify the amount you want to gamble!')
- 
-//     var output = await eco.FetchBalance(message.author.id)
-//     if (output.balance < amount) return message.reply('You have fewer coins than the amount you want to gamble!')
- 
-//     var gamble = await eco.Coinflip(message.author.id, flip, amount).catch(console.error)
-//     message.reply(`You ${gamble.output}! New balance: ${gamble.newbalance}`)
- 
 //   }
  
 //   if (command === 'slots') {
@@ -492,6 +492,5 @@ bot.on('message', async msg => {
 //   }
 
 // })
-
 
 bot.login(token);
