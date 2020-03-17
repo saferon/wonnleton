@@ -237,6 +237,9 @@ bot.on('message', async msg => {
     }
   };
 
+//////////////////////////////////////////////////////////////////////////////////
+// gambling stuff ////////////////////////////////////////////////////////////////
+
   if (command === 'craps') {
 
     var amount = args[0]; //Coins to gamble
@@ -285,21 +288,62 @@ bot.on('message', async msg => {
 
   };
 
-//   if (command === 'ot') { 
+  if (command === 'ot') { 
+    var jobs = ['mad ute', 'invest', 'trapper']
+    var failChanceForMadUte = 40
+    var failChanceForInvestor = 10
+    var failChanceForTrapper = 20
+    var pay = Math.floor(Math.random() * 500)
+    var jobChoice = jobs[Math.floor(Math.random() * jobs.length)]
 
-//     var output = await eco.Work(message.author.id, {
-//       failurerate: 10,
-//       money: Math.floor(Math.random() * 500),
-//       jobs: ['mad ute', 'drilla', 'trapper', 'investor']
-//     })
-//     //10% chance to fail and earn nothing. You earn between 1-500 coins. And you get one of those 3 random jobs.
+    if (jobChoice === 'mad ute') {
+      msg.reply("You are going OT as a " + jobChoice + ".")
+      rollNumber = Math.floor(Math.random * 100)
+      if (rollNumber > failChanceForMadUte) {
+        msg.channel.send("Chinged up bare ops and took that pack, you got " + pay + " AP coin.")
+        AP[msg.author.id].AP = AP[msg.author.id].AP + pay
+        msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.")
+      } else {
+        msg.channel.send("You got bored up 😂😂😂")
+        AP[msg.author.id].AP = AP[msg.author.id].AP - pay
+        msg.channel.send("You lost " + pay + " AP coin.")
+      }     
+    }
+    if (jobChoice === 'invest') {
+      msg.reply("You wanted to go OT, but you've decided to " + jobChoice + " instead.")
+      rollNumber = Math.floor(Math.random * 100)
+      if (rollNumber > failChanceForInvestor) {
+        msg.channel.send("📈 Bogdanoff has blessed you today, and you got " + pay + " AP coin. 📈")
+        AP[msg.author.id].AP = AP[msg.author.id].AP + pay
+        msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.")
+      } else {
+        msg.channel.send("📉 DOOMPT EET. 📉")
+        AP[msg.author.id].AP = AP[msg.author.id].AP - pay
+        msg.channel.send("You lost " + pay + " AP coin.")
+      }     
+    }
+    if (jobChoice === 'trapper') {
+      msg.reply("Diligent " + jobChoice + " stepping out.")
+      rollNumber = Math.floor(Math.random * 100)
+      if (rollNumber > failChanceForTrapper) {
+        msg.channel.send("You sold some packs to junkies and got " + pay + " AP coin.")
+        AP[msg.author.id].AP = AP[msg.author.id].AP + pay
+        msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.")
+      } else {
+        msg.channel.send("You man stepped out and got robbed...")
+        AP[msg.author.id].AP = AP[msg.author.id].AP - pay
+        msg.channel.send("You lost " + pay + " AP coin.")
+      }     
+    }
+    //10% chance to fail and earn nothing. You earn between 1-500 AP coin. 
+    // And you get one of those 3 random jobs.
 //     if (output.earned == 0) return message.reply('you went OT but you got chinged up...')
  
 //     message.channel.send(`${message.author.username}
 // You worked as a \` ${output.job} \` and earned :money_with_wings: ${output.earned}
 // You now own :money_with_wings: ${output.balance}`)
  
-//   };
+  };
 });
 
 
