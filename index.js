@@ -253,17 +253,18 @@ bot.on('message', async msg => {
   var rollList = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   var roll = rollList[Math.floor(Math.random() * rollList.length)];
   var winnings = amount * 2;
-  msg.reply("You threw down " + amount + " AP coin, for a chance to win " + winnings + "AP coin.")
+  msg.reply("You threw down " + amount + " AP coin, for a chance to win " + winnings + " AP coin.")
   msg.channel.send("You rolled " + roll);
   if (roll === 7 || 11) {
     msg.channel.send("Bill it up, you gained " + winnings + " AP coin.");
     AP[msg.author.id].AP = output + winnings;
-  } else if (roll === 2 || 3 || 12) {
+  }
+  if (roll === 2 || 3 || 12) {
     msg.channel.send("You man lost " + amount + " AP coin.");
     AP[msg.author.id].AP = output - amount;
     msg.channel.send("You now have " + output + " AP coin.");
   } else {
-    while (rolls != roll) {
+    while (rolls != 0) {
     msg.channel.send("Rolling again.");
     rolls = rollList[Math.floor(Math.random() * rollList.length)];
     msg.channel.send("Rolled " + rolls + ".");
