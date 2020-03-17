@@ -22,26 +22,6 @@ bot.on("ready", () => {
   console.log("WONNLETON HAS RISEN");
 });
 
-bot.on("message", msg => {
-  if (msg.content.includes("cheers")) {
-    msg.channel.send("Aye. Cheers.");
-  }
-  if (msg.content.includes("spicy")) {
-    msg.channel.send("ไม่เผ็ดไม่กิน");
-  }
-});
-
-//////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////
-
-bot.on("message", msg => {
-  switch (msg.content) {
-    case "cringe":
-      msg.reply("crinje*");
-      break;
-  }
-});
-
 //////////////////////////////////////////////////////////////////////////////////
 //functions //////////////////////////////////////////////////////////////////////
 
@@ -90,7 +70,7 @@ bot.on('message', async msg => {
   let nextLevel = xp[msg.author.id].level * 300;
   let untilNextLevel = nextLevel - currentXP
   xp[msg.author.id].xp = currentXP + xpAdd;
-  if(nextLevel <= xp[msg.author.id].xp){
+  if (nextLevel <= xp[msg.author.id].xp) {
     xp[msg.author.id].level = currentLevel + 1;
     let levelUp = new Discord.RichEmbed()
     .setTitle("Level Up!")
@@ -100,8 +80,8 @@ bot.on('message', async msg => {
     msg.channel.send(levelUp)
   };
 
-  fs.writeFile("./xp.json", JSON.stringify(xp), (err) =>{
-    if(err) console.log(err)
+  fs.writeFile("./xp.json", JSON.stringify(xp), (err) => {
+    if (err) console.log(err)
   });
 //////////////////////////////////////////////////////////////////////////////////
 //AP coins////////////////////////////////////////////////////////////////////////
@@ -133,7 +113,7 @@ bot.on('message', async msg => {
 
   };
 //////////////////////////////////////////////////////////////////////////////////
-/////Linda Stuff//////////////////////////////////////////////////////////////////
+//Linda Stuff/////////////////////////////////////////////////////////////////////
 
   if (command === 'linda') {
       if (args.length === 0) {
@@ -203,7 +183,7 @@ bot.on('message', async msg => {
   if (command === 'darien') {
     if (msg.member.voiceChannel) {
       msg.member.voiceChannel.join().then(connection => {
-        var playAudio = connection.playFile(
+        connection.playFile( // if song breaks add in var playaudio =
           "/home/pi/Downloads/Darien_Throat_Clear.wav"
         );
         setTimeout(function() {
@@ -214,6 +194,19 @@ bot.on('message', async msg => {
       msg.channel.send("Not in a channel mate.");
     }
   };
+
+  if (msg.content.includes("cheers")) {
+    msg.channel.send("Aye. Cheers.");
+  };
+
+  if (msg.content.includes("spicy")) {
+    msg.channel.send("ไม่เผ็ดไม่กิน");
+  };
+
+  if (msg.content.includes("cringe")) {
+    msg.react("😬")
+    msg.reply("crinje*")
+  }
 //////////////////////////////////////////////////////////////////////////////////
 //music stuff/////////////////////////////////////////////////////////////////////
 // this needs a lot of work lmfao
@@ -247,9 +240,6 @@ bot.on('message', async msg => {
 
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
-
-//   //If the message does not start with your prefix return.
-//   if (!msg.content.startsWith(prefix)) return;
 
 //   if (command === 'xpboard') {
 
@@ -302,22 +292,6 @@ bot.on('message', async msg => {
 //     var output = await eco.FetchBalance(message.author.id)
 //     message.channel.send(`Hey ${message.author.tag}! You have ${output.balance} AP coins.`);
 //   }
- 
-//   // if (command === 'daily') {
- 
-//   //   var output = await eco.Daily(message.author.id)
-//   //   //output.updated will tell you if the user already claimed his/her daily yes or no.
- 
-//   //   if (output.updated) {
- 
-//   //     var profile = await eco.AddToBalance(message.author.id, 100)
-//   //     message.reply(`You claimed your daily coins successfully! You now own ${profile.newbalance} coins.`);
- 
-//   //   } else {
-//   //     message.channel.send(`Sorry, you already claimed your daily coins!\nBut no worries, over ${output.timetowait} you can daily again!`)
-//   //   }
- 
-//   // }
 
 //   if (command === 'investors') {
  
@@ -387,7 +361,7 @@ bot.on('message', async msg => {
  
 //   }
  
-//   if (command === 'dice') {
+//   if (command === 'craps') {
  
 //     var roll = args[0] //Should be a number between 1 and 6
 //     var amount = args[1] //Coins to gamble
@@ -402,21 +376,7 @@ bot.on('message', async msg => {
 //     message.reply(`The dice rolled ${gamble.dice}. So you ${gamble.output}! New balance: ${gamble.newbalance}`)
  
 //   }
- 
-//   // if (command == 'delete') { //You want to make this command admin only!
- 
-//   //   var user = message.mentions.users.first()
-//   //   if (!user) return message.reply('Please specify a user I have to delete in my database!')
- 
-//   //   if (!message.guild.me.hasPermission(`ADMINISTRATION`)) return message.reply('You need to be admin to execute this command!')
- 
-//   //   var output = await eco.Delete(user.id)
-//   //   if (output.deleted == true) return message.reply('Successfully deleted the user out of the database!')
- 
-//   //   message.reply('Error: Could not find the user in database.')
- 
-//   // }
- 
+
 //   if (command === 'ot') { 
 
 //     var output = await eco.Work(message.author.id, {
