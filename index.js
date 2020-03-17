@@ -136,17 +136,17 @@ bot.on('message', async msg => {
 /////Linda Stuff//////////////////////////////////////////////////////////////////
 
   if (command === 'linda') {
-      if (args === []) {
+      if (args.length === 0) {
         msg.reply("That ain't the raw... add some content.")
       } else {
         try {
-          var files = fs.readdirSync(imagePath + args);
+          var files = fs.readdirSync(imagePath + args[0]);
           var randomLinda = files[randomIndex(files.length)];
           console.log("------------------------------") // 30 -
-          console.log("requested a rare " + args)
+          console.log("requested a rare " + args[0])
           console.log(randomLinda);
           msg.reply("", {
-            files: [imagePath + args + "/" + randomLinda]
+            files: [imagePath + args[0] + "/" + randomLinda]
           });
         } catch {
           msg.reply("That ain't the raw... no content.")
@@ -184,7 +184,7 @@ bot.on('message', async msg => {
 //////////////////////////////////////////////////////////////////////////////////
 //wlt stuff///////////////////////////////////////////////////////////////////////
   if (command === 'wlt') {
-    if (args === []) {
+    if (args.length === 0) {
       msg.reply(wlt[randomIndex(wlt.length)]);
     }
     else if (args <= 0 || args > wlt.length) {
