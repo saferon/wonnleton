@@ -255,11 +255,11 @@ bot.on('message', async msg => {
     var winnings = amount * 2;
     msg.reply("You threw down " + amount + " AP coin, for a chance to win " + winnings + " AP coin.")
     msg.channel.send("You rolled " + roll);
-    if (roll === 7 || 11) {
+    if (roll === 7 || roll === 11) {
       msg.channel.send("Bill it up, you gained " + winnings + " AP coin.");
       AP[msg.author.id].AP = output + winnings;
     }
-    if (roll === 2 || 3 || 12) {
+    if (roll === 2 || roll === 3 || roll === 12) {
       msg.channel.send("You man lost " + amount + " AP coin.");
       AP[msg.author.id].AP = output - amount;
       msg.channel.send("You now have " + output + " AP coin.");
