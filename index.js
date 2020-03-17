@@ -264,7 +264,7 @@ bot.on('message', async msg => {
       AP[msg.author.id].AP = output - amount;
       msg.channel.send("You now have " + output + " AP coin.");
     } else {
-      while (rolls != 0) {
+      while (roll != 0) {
       msg.channel.send("Rolling again.");
       rolls = rollList[Math.floor(Math.random() * rollList.length)];
       msg.channel.send("Rolled " + rolls + ".");
