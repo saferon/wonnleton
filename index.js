@@ -261,22 +261,22 @@ bot.on('message', async msg => {
     } else if (roll === 2 || roll === 3 || roll === 12) {
       msg.channel.send("You man lost " + amount + " AP coin.");
       AP[msg.author.id].AP = output - amount;
-      msg.channel.send("You now have " + output + " AP coin.");
+      msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
     } else {
       while (roll != 0) {
-      msg.channel.send("Rolling again.").then(msg => {msg.delete(5000)});
+      msg.channel.send("Rolling again.").then(msg => {msg.delete(2000)});
       rolls = rollList[Math.floor(Math.random() * rollList.length)];
-      msg.channel.send("Rolled " + rolls + ".").then(msg => {msg.delete(5000)});
+      msg.channel.send("Rolled " + rolls + ".").then(msg => {msg.delete(2000)});
       if (rolls === 7) {
         msg.channel.send("You've rolled a 7 and lost.");
         AP[msg.author.id].AP = output - amount;
-        msg.channel.send("You now have " + output + " AP coin.");
+        msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
         break;
       }
       if (rolls === roll) {
         msg.channel.send("You've rolled another" + roll + ". You win.");
         AP[msg.author.id].AP = output + winnings;
-        msg.channel.send("You now have " + output + " AP coin.");
+        msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
         break;
       }
     } 
@@ -285,21 +285,21 @@ bot.on('message', async msg => {
 
   };
 
-  if (command === 'ot') { 
+//   if (command === 'ot') { 
 
-    var output = await eco.Work(message.author.id, {
-      failurerate: 10,
-      money: Math.floor(Math.random() * 500),
-      jobs: ['mad ute', 'drilla', 'trapper', 'investor']
-    })
-    //10% chance to fail and earn nothing. You earn between 1-500 coins. And you get one of those 3 random jobs.
-    if (output.earned == 0) return message.reply('you went OT but you got chinged up...')
+//     var output = await eco.Work(message.author.id, {
+//       failurerate: 10,
+//       money: Math.floor(Math.random() * 500),
+//       jobs: ['mad ute', 'drilla', 'trapper', 'investor']
+//     })
+//     //10% chance to fail and earn nothing. You earn between 1-500 coins. And you get one of those 3 random jobs.
+//     if (output.earned == 0) return message.reply('you went OT but you got chinged up...')
  
-    message.channel.send(`${message.author.username}
-You worked as a \` ${output.job} \` and earned :money_with_wings: ${output.earned}
-You now own :money_with_wings: ${output.balance}`)
+//     message.channel.send(`${message.author.username}
+// You worked as a \` ${output.job} \` and earned :money_with_wings: ${output.earned}
+// You now own :money_with_wings: ${output.balance}`)
  
-  };
+//   };
 });
 
 
