@@ -299,6 +299,7 @@ bot.on('message', async msg => {
     if (jobChoice === 'mad ute') {
       msg.reply("You are going OT as a " + jobChoice + ".")
       rollNumber = Math.floor(Math.random * 100)
+      console.log(rollNumber)
       if (rollNumber > failChanceForMadUte) {
         msg.channel.send("Chinged up bare ops and took that pack, you got " + pay + " AP coin.")
         AP[msg.author.id].AP = AP[msg.author.id].AP + pay
@@ -312,6 +313,7 @@ bot.on('message', async msg => {
     if (jobChoice === 'invest') {
       msg.reply("You wanted to go OT, but you've decided to " + jobChoice + " instead.")
       rollNumber = Math.floor(Math.random * 100)
+      console.log(rollNumber)
       if (rollNumber > failChanceForInvestor) {
         msg.channel.send("📈 Bogdanoff has blessed you today, and you got " + pay + " AP coin. 📈")
         AP[msg.author.id].AP = AP[msg.author.id].AP + pay
@@ -325,6 +327,7 @@ bot.on('message', async msg => {
     if (jobChoice === 'trapper') {
       msg.reply("Diligent " + jobChoice + " stepping out.")
       rollNumber = Math.floor(Math.random * 100)
+      console.log(rollNumber)
       if (rollNumber > failChanceForTrapper) {
         msg.channel.send("You sold some packs to junkies and got " + pay + " AP coin.")
         AP[msg.author.id].AP = AP[msg.author.id].AP + pay
