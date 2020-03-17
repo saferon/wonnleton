@@ -72,7 +72,6 @@ bot.on('message', async msg => {
   //set-up prefix and command part to take in, args for after the command
   var prefix = '!'
   var command = msg.content.toLowerCase().slice(prefix.length).split(' ')[0];
-  var args = null
   var args = msg.content.split(' ').slice(1);
   //skips anything a bot sends
   if (msg.author.bot) return;
@@ -137,7 +136,7 @@ bot.on('message', async msg => {
 /////Linda Stuff//////////////////////////////////////////////////////////////////
 
   if (command === 'linda') {
-      if (args === null) {
+      if (args === []) {
         msg.reply("That ain't the raw... add some content.")
       } else {
         try {
@@ -185,7 +184,7 @@ bot.on('message', async msg => {
 //////////////////////////////////////////////////////////////////////////////////
 //wlt stuff///////////////////////////////////////////////////////////////////////
   if (command === 'wlt') {
-    if (args === null) {
+    if (args === []) {
       msg.reply(wlt[randomIndex(wlt.length)]);
     }
     else if (args <= 0 || args > wlt.length) {
