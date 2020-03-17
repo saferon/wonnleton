@@ -257,10 +257,10 @@ bot.on('message', async msg => {
     msg.channel.send("You rolled " + roll);
     if (roll === 7 || roll === 11) {
       msg.channel.send("Bill it up, you gained " + winnings + " AP coin.");
-      AP[msg.author.id].AP = output + winnings;
+      AP[msg.author.id].AP = AP[msg.author.id].AP + winnings;
     } else if (roll === 2 || roll === 3 || roll === 12) {
       msg.channel.send("You man lost " + amount + " AP coin.");
-      AP[msg.author.id].AP = output - amount;
+      AP[msg.author.id].AP = AP[msg.author.id].AP - amount;
       msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
     } else {
       while (roll != 0) {
@@ -269,13 +269,13 @@ bot.on('message', async msg => {
       msg.channel.send("Rolled " + rolls + ".").then(msg => {msg.delete(2000)});
       if (rolls === 7) {
         msg.channel.send("You've rolled a 7 and lost.");
-        AP[msg.author.id].AP = output - amount;
+        AP[msg.author.id].AP = AP[msg.author.id].AP - amount;
         msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
         break;
       }
       if (rolls === roll) {
         msg.channel.send("You've rolled another" + roll + ". You win.");
-        AP[msg.author.id].AP = output + winnings;
+        AP[msg.author.id].AP = AP[msg.author.id].AP + winnings;
         msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
         break;
       }
