@@ -1,4 +1,6 @@
 // ideas: integrate with l.i.n.d.a, fetch youtube uploads from mike, mark, trevor, and sonny
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
 const Discord = require("discord.js");
 const { token } = require("./config.json");
@@ -11,36 +13,16 @@ const imagePath = "/media/pi/8A02-DF82/lindas/";
 const songPath = "/media/pi/8A02-DF82/songs/";
 
 let xp = require("./xp.json");
-
 let AP = require("./AP.json");
+
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
 bot.on("ready", () => {
   console.log("WONNLETON HAS RISEN");
 });
 
 bot.on("message", msg => {
-  // if (msg.content.startsWith("!linda ")) {
-  //   try {
-  //     var linda = msg.content.split(" ")[1];
-  //     var files = fs.readdirSync(imagePath + linda);
-  //     var randomLinda = files[randomIndex(files.length)];
-  //     console.log("-------------------------");
-  //     console.log("requested a(n) " + linda);
-  //     console.log(randomLinda);
-  //     msg.reply("", {
-  //       files: [imagePath + linda + "/" + randomLinda]
-  //     });
-  //   } catch {
-  //     msg.reply("that aint the raw");
-  //   }
-  // } else if (msg.content.startsWith("wlt ")) {
-  //   var wltNum = msg.content.split(" ")[1];
-  //   if (wltNum <= 0 || wltNum > wlt.length) {
-  //     msg.reply("Please enter a valid WLT.");
-  //   } else {
-  //     msg.reply(wlt[wltNum - 1]);
-  //   }
-  // }
   if (msg.content.includes("cheers")) {
     msg.channel.send("Aye. Cheers.");
   }
@@ -49,90 +31,19 @@ bot.on("message", msg => {
   }
 });
 
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+
 bot.on("message", msg => {
   switch (msg.content) {
     case "cringe":
       msg.reply("crinje*");
       break;
-
-    // case "wlt":
-    //   msg.reply(wlt[randomIndex(wlt.length)]);
-    //   break;
-
-    // case "!randomlinda":
-    //   var lindaList = fs.readdirSync(imagePath);
-    //   var index = lindaList.indexOf("desktop.ini");
-    //   lindaList.splice(index, 1);
-    //   var randomFolder = randomIndex(lindaList.length);
-    //   var chosenFolder = fs.readdirSync(imagePath + lindaList[randomFolder]);
-    //   var lindaFolder = randomIndex(chosenFolder.length);
-    //   console.log("-------------------------");
-    //   console.log("sent out a(n) " + lindaList[randomFolder]);
-    //   console.log(chosenFolder[lindaFolder]);
-    //   msg.channel.send(lindaList[randomFolder] + "!", {
-    //     files: [
-    //       imagePath + lindaList[randomFolder] + "/" + chosenFolder[lindaFolder]
-    //     ]
-    //   });
-    //   break;
-
-    // case "!lindas":
-    //   var lindaList = fs.readdirSync(imagePath);
-    //   var index = lindaList.indexOf("desktop.ini");
-    //   lindaList.splice(index, 1);
-    //   var lindaArray = listSort(lindaList);
-    //   for (var i = 0; i < lindaArray.length; i++) {
-    //     msg.author.send("```" + lindaArray[i] + "```");
-    //   }
-    //   break;
-
-    // case "!help":
-    //   msg.author.send(help);
-    //   break;
-
-    // case "!darien":
-    //   if (msg.member.voiceChannel) {
-    //     msg.member.voiceChannel.join().then(connection => {
-    //       var playAudio = connection.playFile(
-    //         "/home/pi/Downloads/Darien_Throat_Clear.wav"
-    //       );
-    //       setTimeout(function() {
-    //         msg.member.voiceChannel.leave();
-    //       }, 3000);
-    //     });
-    //   } else {
-    //     msg.channel.send("Not in a channel mate.");
-    //   }
-    //   break;
-
-//     case "!song":
-//       var songList = fs.readdirSync(songPath);
-//       var index = songList.indexOf("desktop.ini");
-//       songList.splice(index, 1);
-//       var randomFolder = randomIndex(songList.length);
-//       var chosenFolder = fs.readdirSync(songPath + songList[randomFolder]);
-//       var songFolder = randomIndex(chosenFolder.length);
-//       console.log("-------------------------");
-//       console.log("playing from album " + songList[randomFolder]);
-//       console.log(chosenFolder[songFolder]);
-//       if (msg.member.voiceChannel) {
-//         msg.member.voiceChannel.join().then(connection => {
-//           var playAudio = connection.playFile(
-//             songPath + songList[randomFolder] + "/" + chosenFolder[songFolder]
-//           );
-//           msg.channel.send(
-//             "Now playing: " +
-//               songList[randomFolder] +
-//               " - " +
-//               chosenFolder[songFolder]
-//           );
-//         });
-//       } else {
-//         msg.channel.send("Not in a channel mate.");
-//       }
-//       break;
   }
 });
+
+//////////////////////////////////////////////////////////////////////////////////
+//functions //////////////////////////////////////////////////////////////////////
 
 function randomIndex(length) {
   return Math.floor(Math.random() * length);
@@ -154,14 +65,19 @@ function listSort(list) {
   return tmpArr;
 }
 
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+
 bot.on('message', async msg => {
   //set-up prefix and command part to take in, args for after the command
   var prefix = '!'
   var command = msg.content.toLowerCase().slice(prefix.length).split(' ')[0];
+  var args = ''
   var args = msg.content.split(' ').slice(1);
   //skips anything a bot sends
   if (msg.author.bot) return;
-  //xp system///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//xp system///////////////////////////////////////////////////////////////////////
   let xpAdd = Math.floor(Math.random() * 7) + 8;
   if(!xp[msg.author.id]){
     xp[msg.author.id] = {
@@ -188,6 +104,7 @@ bot.on('message', async msg => {
   fs.writeFile("./xp.json", JSON.stringify(xp), (err) =>{
     if(err) console.log(err)
   });
+//////////////////////////////////////////////////////////////////////////////////
 //AP coins////////////////////////////////////////////////////////////////////////
   let apAdd = Math.floor(Math.random() * 3) + 3;
   if (!AP[msg.author.id]) {
@@ -202,8 +119,8 @@ bot.on('message', async msg => {
   fs.writeFile("./AP.json", JSON.stringify(AP), (err) => {
     if (err) console.log(err)
   });
-//////////////////////////////////////////////////////
-//profile thing/////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//profile thing///////////////////////////////////////////////////////////////////
 
   if (command === 'profile') {
     let levelEmbed = new Discord.RichEmbed()
@@ -216,10 +133,11 @@ bot.on('message', async msg => {
     msg.channel.send(levelEmbed)
 
   };
-/////Linda Stuff//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+/////Linda Stuff//////////////////////////////////////////////////////////////////
 
   if (command === 'linda') {
-      if (!args) {
+      if (args === '') {
         msg.reply("That ain't the raw... add some content.")
       } else {
         try {
@@ -264,10 +182,10 @@ bot.on('message', async msg => {
       msg.author.send("```" + lindaArray[i] + "```");
     }
   };
-///////////////////////////////////////////////////////////////////////////
-//wlt stuff////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//wlt stuff///////////////////////////////////////////////////////////////////////
   if (command === 'wlt') {
-    if (!args) {
+    if (args === '') {
       msg.reply(wlt[randomIndex(wlt.length)]);
     }
     else if (args <= 0 || args > wlt.length) {
@@ -276,13 +194,13 @@ bot.on('message', async msg => {
       msg.reply(wlt[args - 1]);
     }
   };
-///////////////////////////////////////////////////////////////////////////
-//help stuff////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//help stuff//////////////////////////////////////////////////////////////////////
   if (command === 'help') {
     msg.author.send(help);
   };
-///////////////////////////////////////////////////////////////////////////
-//for fun////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//for fun/////////////////////////////////////////////////////////////////////////
   if (command === 'darien') {
     if (msg.member.voiceChannel) {
       msg.member.voiceChannel.join().then(connection => {
@@ -297,8 +215,8 @@ bot.on('message', async msg => {
       msg.channel.send("Not in a channel mate.");
     }
   };
-///////////////////////////////////////////////////////////////////////////
-//music stuff////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//music stuff/////////////////////////////////////////////////////////////////////
 // this needs a lot of work lmfao
   if (command === 'song') {
     var songList = fs.readdirSync(songPath);
@@ -312,7 +230,7 @@ bot.on('message', async msg => {
     console.log(chosenFolder[songFolder]);
     if (msg.member.voiceChannel) {
       msg.member.voiceChannel.join().then(connection => {
-        var playAudio = connection.playFile(
+        connection.playFile(  // if song breaks add in var playaudio = 
           songPath + songList[randomFolder] + "/" + chosenFolder[songFolder]
         );
         msg.channel.send(
@@ -327,59 +245,12 @@ bot.on('message', async msg => {
     }
   };
 });
-///////////////////////////////////////////////////////////////////////////
 
-// bot.on('message', async message => {
-//   //This reads the first part of your message behind your prefix to see which command you want to use.
-//   var prefix = '!'
-//   var command = msg.content.toLowerCase().slice(prefix.length).split(' ')[0];
-  
-//   //These are the arguments behind the commands.
-//   var args = msg.content.split(' ').slice(1);
-
-//   //If the user that types a message is a bot account return.
-//   if (msg.author.bot) return;
-
-//   //When someone sends a message add xp
-//   var profile = await leveling.Fetch(msg.author.id)
-//   // add some ap coins too
-//   eco.AddToBalance(message.author.id, Math.floor(Math.random() * 3))
-//   leveling.AddXp(msg.author.id, 10)
-//   //If user xp higher than 300 add level
-//   if (profile.xp + 10 > 300) {
-//     await leveling.AddLevel(msg.author.id, 1)
-//     await leveling.SetXp(msg.author.id, 0)
-//     msg.reply(`You just leveled up!! You are now level: ${profile.level + 1}`)
-//   }
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
 //   //If the message does not start with your prefix return.
 //   if (!msg.content.startsWith(prefix)) return;
-
-//   if (command === 'profile') {
-
-//     var user = msg.mentions.users.first() || msg.author
-
-//     var output = await leveling.Fetch(user.id)
-//     msg.channel.send(`Hey ${user.tag}! You have ${output.level} level(s)! and ${output.xp} xp!`);
-//   }
-
-//   // if (command === 'setxp') {
-
-//   //   var amount = args[0]
-//   //   var user = msg.mentions.users.first() || msg.author
-
-//   //   var output = await leveling.SetXp(user.id, amount)
-//   //   msg.channel.send(`Hey ${user.tag}! You now have ${amount} xp!`);
-//   // }
-
-//   // if (command === 'setlevel') {
-
-//   //   var amount = args[0]
-//   //   var user = msg.mentions.users.first() || msg.author
-
-//   //   var output = await leveling.SetLevel(user.id, amount)
-//   //   msg.channel.send(`Hey ${user.tag}! You now have ${amount} levels!`);
-//   // }
 
 //   if (command === 'xpboard') {
 
@@ -448,15 +319,7 @@ bot.on('message', async msg => {
 //   //   }
  
 //   // }
- 
-//   // if (command === 'resetdaily') {
- 
-//   //   var output = await eco.ResetDaily(message.author.id)
- 
-//   //   message.reply(output) //It will send 'Daily Reset.'
- 
-//   // }
- 
+
 //   if (command === 'investors') {
  
 //     //If you use discord-economy guild based you can use the filter() function to only allow the database within your guild
@@ -555,16 +418,8 @@ bot.on('message', async msg => {
  
 //   // }
  
-//   if (command === 'ot') { //I made 2 examples for this command! Both versions will work!
- 
-// //     var output = await eco.Work(message.author.id)
-// //     //50% chance to fail and earn nothing. You earn between 1-100 coins. And you get one out of 20 random jobs.
-// //     if (output.earned == 0) return message.reply('you went OT but you got chinged up...')
-// //     message.channel.send(`${message.author.username}
-// // You worked as a \` ${output.job} \` and earned :money_with_wings: ${output.earned}
-// // You now own :money_with_wings: ${output.balance}`)
- 
- 
+//   if (command === 'ot') { 
+
 //     var output = await eco.Work(message.author.id, {
 //       failurerate: 10,
 //       money: Math.floor(Math.random() * 500),
@@ -595,20 +450,6 @@ bot.on('message', async msg => {
 //     message.channel.send(gamble.grid)//Grid checks for a 100% match vertical or horizontal.
 //     message.reply(`You ${gamble.output}! New balance: ${gamble.newbalance}`)
 //   }
-
-//   // if (command == 'delete') { //You want to make this command admin only!
-
-//   //   var user = message.mentions.users.first()
-//   //   if (!user) return message.reply('Please specify a user I have to delete in my database!')
-
-//   //   if (!message.guild.me.hasPermission(`ADMINISTRATION`)) return message.reply('You need to be admin to execute this command!')
-
-//   //   var output = await leveling.Delete(user.id)
-//   //   if (output.deleted == true) return message.reply('Succesfully deleted the user out of the database!')
-
-//   //   message.reply('Error: Could not find the user in database.')
-
-//   // }
 
 // })
 
