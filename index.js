@@ -239,47 +239,47 @@ bot.on('message', async msg => {
 
   if (command === 'craps') {
 
-  var amount = args[0]; //Coins to gamble
+    var amount = args[0]; //Coins to gamble
 
-  if (!amount) return msg.reply('Specify the amount of AP you want to gamble.');
+    if (!amount) return msg.reply('Specify the amount of AP you want to gamble.');
 
-  var output = AP[msg.author.id].AP;
-  if (output < amount) return msg.reply("You don't have enough AP to gamble.")
-    // 7 or 11 win instantly
-    // 2 3 12 lose instantly
-    // point get for other rolls eg 5
-    // if u roll 5 again, you win
-    // if u roll 7 then you lose
-  var rollList = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  var roll = rollList[Math.floor(Math.random() * rollList.length)];
-  var winnings = amount * 2;
-  msg.reply("You threw down " + amount + " AP coin, for a chance to win " + winnings + " AP coin.")
-  msg.channel.send("You rolled " + roll);
-  if (roll === 7 || 11) {
-    msg.channel.send("Bill it up, you gained " + winnings + " AP coin.");
-    AP[msg.author.id].AP = output + winnings;
-  }
-  if (roll === 2 || 3 || 12) {
-    msg.channel.send("You man lost " + amount + " AP coin.");
-    AP[msg.author.id].AP = output - amount;
-    msg.channel.send("You now have " + output + " AP coin.");
-  } else {
-    while (rolls != 0) {
-    msg.channel.send("Rolling again.");
-    rolls = rollList[Math.floor(Math.random() * rollList.length)];
-    msg.channel.send("Rolled " + rolls + ".");
-    if (rolls === 7) {
-      msg.channel.send("You've rolled a 7 and lost.");
+    var output = AP[msg.author.id].AP;
+    if (output < amount) return msg.reply("You don't have enough AP to gamble.")
+      // 7 or 11 win instantly
+      // 2 3 12 lose instantly
+      // point get for other rolls eg 5
+      // if u roll 5 again, you win
+      // if u roll 7 then you lose
+    var rollList = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    var roll = rollList[Math.floor(Math.random() * rollList.length)];
+    var winnings = amount * 2;
+    msg.reply("You threw down " + amount + " AP coin, for a chance to win " + winnings + " AP coin.")
+    msg.channel.send("You rolled " + roll);
+    if (roll === 7 || 11) {
+      msg.channel.send("Bill it up, you gained " + winnings + " AP coin.");
+      AP[msg.author.id].AP = output + winnings;
+    }
+    if (roll === 2 || 3 || 12) {
+      msg.channel.send("You man lost " + amount + " AP coin.");
       AP[msg.author.id].AP = output - amount;
       msg.channel.send("You now have " + output + " AP coin.");
-      break;
-    }
-    if (rolls === roll) {
-      msg.channel.send("You've rolled another" + roll + ". You win.");
-      AP[msg.author.id].AP = output + winnings;
-      msg.channel.send("You now have " + output + " AP coin.");
-      break;
-    }
+    } else {
+      while (rolls != 0) {
+      msg.channel.send("Rolling again.");
+      rolls = rollList[Math.floor(Math.random() * rollList.length)];
+      msg.channel.send("Rolled " + rolls + ".");
+      if (rolls === 7) {
+        msg.channel.send("You've rolled a 7 and lost.");
+        AP[msg.author.id].AP = output - amount;
+        msg.channel.send("You now have " + output + " AP coin.");
+        break;
+      }
+      if (rolls === roll) {
+        msg.channel.send("You've rolled another" + roll + ". You win.");
+        AP[msg.author.id].AP = output + winnings;
+        msg.channel.send("You now have " + output + " AP coin.");
+        break;
+      }
     } 
   }
   
