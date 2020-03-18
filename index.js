@@ -406,7 +406,7 @@ bot.on('message', async msg => {
  
     var flip = args[0] //Heads or Tails
     var amount = args[1] //Coins to gamble
-    var winnings = amount
+    var winnings = amount * 2
     // check if input is correct
     if (!flip || !['heads', 'tails'].includes(flip)) return msg.reply('Please specify the flip, either heads or tails!')
     if (!amount) return msg.reply('Specify the amount you want to gamble!')
