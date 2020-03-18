@@ -15,7 +15,7 @@ const songPath = "/media/pi/8A02-DF82/songs/";
 let cooldown = new Set();
 let cdFiveSec = 5;
 let dayCooldown = new Set();
-let cdDay = 86400; // a day
+let cdDay = 3600 // an hour   86400; // a day
 
 let xp = require("./xp.json");
 let AP = require("./AP.json");
@@ -52,14 +52,6 @@ function listSort(list) {
   return tmpArr;
 }
 
-// function negativeAP(AP) {
-//   if (AP < 0) {
-//     return AP = 0;
-//   } else {
-//     return;
-//   }
-// }
-
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -70,9 +62,10 @@ bot.on('message', async msg => {
   var args = msg.content.split(' ').slice(1);
   //skips anything a bot sends
   if (msg.author.bot) return;
-  // negativeAP(AP[msg.author.id].AP);
+
 //////////////////////////////////////////////////////////////////////////////////
 //xp system///////////////////////////////////////////////////////////////////////
+
   let xpAdd = Math.floor(Math.random() * 7) + 8;
   if(!xp[msg.author.id]){
     xp[msg.author.id] = {
@@ -99,6 +92,7 @@ bot.on('message', async msg => {
   fs.writeFile("./xp.json", JSON.stringify(xp), (err) => {
     if (err) console.log(err)
   });
+
 //////////////////////////////////////////////////////////////////////////////////
 //AP coins////////////////////////////////////////////////////////////////////////
 
@@ -141,8 +135,10 @@ bot.on('message', async msg => {
   if (msg.content.includes("AP")) {
     msg.react(APCoinEmoji)
   };
+
 //////////////////////////////////////////////////////////////////////////////////
 //all content after here needs to be executed with prefix/////////////////////////
+
   if (!msg.content.startsWith(prefix)) return;
   if (cooldown.has(msg.author.id)) {
     msg.delete();
@@ -169,6 +165,7 @@ bot.on('message', async msg => {
     msg.channel.send(levelEmbed)
 
   };
+
 //////////////////////////////////////////////////////////////////////////////////
 //Linda Stuff/////////////////////////////////////////////////////////////////////
 
@@ -218,8 +215,10 @@ bot.on('message', async msg => {
       msg.author.send("```" + lindaArray[i] + "```");
     }
   };
+
 //////////////////////////////////////////////////////////////////////////////////
 //wlt stuff///////////////////////////////////////////////////////////////////////
+
   if (command === 'wlt') {
     if (args.length === 0) {
       msg.reply(wlt[randomIndex(wlt.length)]);
@@ -230,13 +229,17 @@ bot.on('message', async msg => {
       msg.reply(wlt[args - 1]);
     }
   };
+
 //////////////////////////////////////////////////////////////////////////////////
 //help stuff//////////////////////////////////////////////////////////////////////
+
   if (command === 'help') {
     msg.author.send(help);
   };
+
 //////////////////////////////////////////////////////////////////////////////////
 //for fun/////////////////////////////////////////////////////////////////////////
+
   if (command === 'darien') {
     if (msg.member.voiceChannel) {
       msg.member.voiceChannel.join().then(connection => {
