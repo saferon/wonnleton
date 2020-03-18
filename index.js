@@ -316,16 +316,16 @@ bot.on('message', async msg => {
   };
 
   if (command === 'ot') { 
-    if (cooldown.has(msg.author.id)) {
-      msg.delete();
-      return msg.reply("Relax bro...")
-    }
+    // if (cooldown.has(msg.author.id)) {
+    //   msg.delete();
+    //   return msg.reply("Relax bro...")
+    // }
   
-    cooldown.add(msg.author.id);
+    // cooldown.add(msg.author.id);
   
-    setTimeout(() => {
-      cooldown.delete(msg.author.id);
-    }, cdDay * 1000)
+    // setTimeout(() => {
+    //   cooldown.delete(msg.author.id);
+    // }, cdDay * 1000)
     var jobs = ['mad ute', 'invest', 'trapper']
     var failChanceForMadUte = 40
     var failChanceForInvestor = 10
