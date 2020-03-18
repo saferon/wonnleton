@@ -127,12 +127,14 @@ bot.on('message', async msg => {
   };
 //////////////////////////////////////////////////////////////////////////////////
 //all content after here needs to be executed with prefix/////////////////////////
-  cooldown.add(msg.author.id);
   if (!msg.content.startsWith(prefix)) return;
   if (cooldown.has(msg.author.id)) {
     msg.delete();
     return msg.reply("Relax bro...")
   }
+  
+  cooldown.add(msg.author.id);
+
   setTimeout(() => {
     cooldown.delete(msg.author.id);
   }, cdFiveSec * 1000)
