@@ -54,7 +54,7 @@ function listSort(list) {
 
 function negativeAP(AP) {
   if (AP < 0){
-    AP = 0;
+    return AP = 0;
   } else {
     return;
   }
