@@ -71,10 +71,6 @@ bot.on('message', async msg => {
   //skips anything a bot sends
   if (msg.author.bot) return;
   // negativeAP(AP[msg.author.id].AP);
-  if (AP[msg.author.id].AP < 0) {
-    AP[msg.author.id].AP = 0
-  } else {
-  }
 //////////////////////////////////////////////////////////////////////////////////
 //xp system///////////////////////////////////////////////////////////////////////
   let xpAdd = Math.floor(Math.random() * 7) + 8;
@@ -118,6 +114,11 @@ bot.on('message', async msg => {
   fs.writeFile("./AP.json", JSON.stringify(AP), (err) => {
     if (err) console.log(err)
   });
+
+  if (AP[msg.author.id].AP < 0) {
+    AP[msg.author.id].AP = 0
+    msg.reply("You have run out of AP coin, you now have " + AP[msg.author.id].AP + " AP coin.")
+  };
 
 //////////////////////////////////////////////////////////////////////////////////
 //message includes content stuff//////////////////////////////////////////////////
