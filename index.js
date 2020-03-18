@@ -300,7 +300,9 @@ bot.on('message', async msg => {
     } else {
       while (roll != 0) {
       msg.channel.send("Rolling again.").then(msg => {msg.delete(2000)});
-      rolls = rollList[Math.floor(Math.random() * rollList.length)];
+      var rolls1 = die[Math.floor(Math.random() * die.length)]
+      var rolls2 = die[Math.floor(Math.random() * die.length)]
+      var rolls = rolls1 + rolls2
       msg.channel.send("Rolled " + rolls + ".").then(msg => {msg.delete(2000)});
       if (rolls === 7) {
         msg.channel.send("You've rolled a 7 and lost.");
