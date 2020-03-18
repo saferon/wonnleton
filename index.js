@@ -101,6 +101,7 @@ bot.on('message', async msg => {
   });
 //////////////////////////////////////////////////////////////////////////////////
 //AP coins////////////////////////////////////////////////////////////////////////
+
   let apAdd = Math.floor(Math.random() * 3) + 3;
   if (!AP[msg.author.id]) {
     AP[msg.author.id] = {
@@ -111,14 +112,14 @@ bot.on('message', async msg => {
   let currentAP = AP[msg.author.id].AP;
   AP[msg.author.id].AP = currentAP + apAdd;
 
-  fs.writeFile("./AP.json", JSON.stringify(AP), (err) => {
-    if (err) console.log(err)
-  });
-
   if (AP[msg.author.id].AP < 0) {
     AP[msg.author.id].AP = 0
     msg.reply("You have run out of AP coin, you now have " + AP[msg.author.id].AP + " AP coin.")
   };
+
+  fs.writeFile("./AP.json", JSON.stringify(AP), (err) => {
+    if (err) console.log(err)
+  });
 
 //////////////////////////////////////////////////////////////////////////////////
 //message includes content stuff//////////////////////////////////////////////////
@@ -426,7 +427,7 @@ bot.on('message', async msg => {
       msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.")
     }
   };
- 
+  
 });
 
 //////////////////////////////////////////////////////////////////////////////////
