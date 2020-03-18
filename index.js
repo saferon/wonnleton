@@ -70,6 +70,7 @@ bot.on('message', async msg => {
   var args = msg.content.split(' ').slice(1);
   //skips anything a bot sends
   if (msg.author.bot) return;
+  negativeAP(AP[msg.author.id].AP);
 //////////////////////////////////////////////////////////////////////////////////
 //xp system///////////////////////////////////////////////////////////////////////
   let xpAdd = Math.floor(Math.random() * 7) + 8;
