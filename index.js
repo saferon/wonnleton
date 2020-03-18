@@ -52,6 +52,14 @@ function listSort(list) {
   return tmpArr;
 }
 
+function negativeAP(AP) {
+  if (AP < 0){
+    AP = 0;
+  } else {
+    return;
+  }
+}
+
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -296,6 +304,7 @@ bot.on('message', async msg => {
     } else if (roll === 2 || roll === 3 || roll === 12) {
       msg.channel.send("You man lost " + amount + " AP coin.");
       AP[msg.author.id].AP = AP[msg.author.id].AP - amount;
+      negativeAP(AP[msg.author.id].AP);
       msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
     } else {
       while (roll != 0) {
@@ -307,6 +316,7 @@ bot.on('message', async msg => {
       if (rolls === 7) {
         msg.channel.send("You've rolled a 7 and lost.");
         AP[msg.author.id].AP = AP[msg.author.id].AP - amount;
+        negativeAP(AP[msg.author.id].AP);
         msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
         break;
       }
@@ -350,6 +360,7 @@ bot.on('message', async msg => {
       } else {
         msg.channel.send("You got bored up 🔪😂😂")
         AP[msg.author.id].AP = AP[msg.author.id].AP - pay
+        negativeAP(AP[msg.author.id].AP);
         msg.channel.send("You lost " + pay + " AP coin.")
       }     
     }
@@ -364,6 +375,7 @@ bot.on('message', async msg => {
       } else {
         msg.channel.send("📉 DOOMPT EET. 📉")
         AP[msg.author.id].AP = AP[msg.author.id].AP - pay
+        negativeAP(AP[msg.author.id].AP);
         msg.channel.send("You lost " + pay + " AP coin.")
       }     
     }
@@ -378,6 +390,7 @@ bot.on('message', async msg => {
       } else {
         msg.channel.send("You man stepped out and got robbed...")
         AP[msg.author.id].AP = AP[msg.author.id].AP - pay
+        negativeAP(AP[msg.author.id].AP);
         msg.channel.send("You lost " + pay + " AP coin.")
       }     
     }
@@ -387,7 +400,7 @@ bot.on('message', async msg => {
  
     var flip = args[0] //Heads or Tails
     var amount = args[1] //Coins to gamble
-    var winnings = amount * 2
+    var winnings = amount
     // check if input is correct
     if (!flip || !['heads', 'tails'].includes(flip)) return msg.reply('Please specify the flip, either heads or tails!')
     if (!amount) return msg.reply('Specify the amount you want to gamble!')
@@ -395,15 +408,16 @@ bot.on('message', async msg => {
     // setup game
     var tossChoices = ['heads', 'tails']
     var toss = tossChoices[Math.floor(Math.random() * tossChoices.length)]
-    msg.reply("You've bet " + amount + " AP coin that it will be " + flip + ". If you win, you will get " + amount + "AP coin.")
+    msg.reply("You've bet " + amount + " AP coin that it will be " + flip + ". If you win, you will get " + winnings + " AP coin.")
     if (flip === toss) { 
       msg.channel.send("It is " + toss + " you've won! 💰")
       AP[msg.author.id].AP = AP[msg.author.id].AP + winnings
-      msg.channel.send("You now have " + AP[msg.author.id].AP + "AP coin.")
+      msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.")
     } else {
       msg.channel.send("It is " + toss + " you lose!")
       AP[msg.author.id].AP = AP[msg.author.id].AP - amount
-      msg.channel.send("You now have " + AP[msg.author.id].AP + "AP coin.")
+      negativeAP(AP[msg.author.id].AP);
+      msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.")
     }
   };
  
