@@ -283,13 +283,15 @@ bot.on('message', async msg => {
       // point get for other rolls eg 5
       // if u roll 5 again, you win
       // if u roll 7 then you lose
-    var rollList = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    var roll = rollList[Math.floor(Math.random() * rollList.length)];
+    var die = [1, 2, 3, 4, 5, 6]
+    var roll1 = die[Math.floor(Math.random() * die.length)];
+    var roll2 = die[Math.floor(Math.random() * die.length)];
+    var roll = roll1 + roll2
     var winnings = amount * 2;
     msg.reply("You threw down " + amount + " AP coin, for a chance to win " + winnings + " AP coin.")
-    msg.channel.send("You rolled " + roll);
+    msg.channel.send("You rolled " + roll + " 🎲🎲");
     if (roll === 7 || roll === 11) {
-      msg.channel.send("Bill it up, you gained " + winnings + " AP coin.");
+      msg.channel.send("Bill it up, you gained " + winnings + " AP coin. 💰");
       AP[msg.author.id].AP = AP[msg.author.id].AP + winnings;
     } else if (roll === 2 || roll === 3 || roll === 12) {
       msg.channel.send("You man lost " + amount + " AP coin.");
@@ -307,7 +309,7 @@ bot.on('message', async msg => {
         break;
       }
       if (rolls === roll) {
-        msg.channel.send("You've rolled another " + roll + ". You win.");
+        msg.channel.send("You've rolled another " + roll + ". You win. 💰");
         AP[msg.author.id].AP = AP[msg.author.id].AP + winnings;
         msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
         break;
@@ -318,7 +320,7 @@ bot.on('message', async msg => {
 
   if (command === 'ot') { 
     if (dayCooldown.has(msg.author.id)) {
-      msg.delete();
+      // msg.delete();
       return msg.reply("You already went OT today, we'll ride out tomorrow...")
     }
   
@@ -327,7 +329,7 @@ bot.on('message', async msg => {
     setTimeout(() => {
       dayCooldown.delete(msg.author.id);
     }, cdDay * 1000)
-    
+
     var jobs = ['mad ute', 'invest', 'trapper']
     var failChanceForMadUte = 40
     var failChanceForInvestor = 10
@@ -340,11 +342,11 @@ bot.on('message', async msg => {
       rollNumber = Math.floor(Math.random() * 100)
       // console.log(rollNumber)
       if (rollNumber > failChanceForMadUte) {
-        msg.channel.send("Chinged up bare ops and took that pack, you got " + pay + " AP coin.")
+        msg.channel.send("Chinged up bare ops and took that pack, you got " + pay + " AP coin. 💰")
         AP[msg.author.id].AP = AP[msg.author.id].AP + pay
         msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.")
       } else {
-        msg.channel.send("You got bored up 😂😂😂")
+        msg.channel.send("You got bored up 🔪😂😂")
         AP[msg.author.id].AP = AP[msg.author.id].AP - pay
         msg.channel.send("You lost " + pay + " AP coin.")
       }     
@@ -364,11 +366,11 @@ bot.on('message', async msg => {
       }     
     }
     if (jobChoice === 'trapper') {
-      msg.reply("Diligent " + jobChoice + " stepping out.")
+      msg.reply("Diligent " + jobChoice + " stepping out. 🚶🚶")
       rollNumber = Math.floor(Math.random() * 100)
       // console.log(rollNumber)
       if (rollNumber > failChanceForTrapper) {
-        msg.channel.send("You sold some packs to junkies and got " + pay + " AP coin.")
+        msg.channel.send("You sold some packs to junkies and got " + pay + " AP coin. 💰")
         AP[msg.author.id].AP = AP[msg.author.id].AP + pay
         msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.")
       } else {
@@ -393,7 +395,7 @@ bot.on('message', async msg => {
     var toss = tossChoices[Math.floor(Math.random() * tossChoices.length)]
     msg.reply("You've bet " + amount + " AP coin that it will be " + flip + ". If you win, you will get " + amount + "AP coin.")
     if (flip === toss) { 
-      msg.channel.send("It is " + toss + " you've won!")
+      msg.channel.send("It is " + toss + " you've won! 💰")
       AP[msg.author.id].AP = AP[msg.author.id].AP + winnings
       msg.channel.send("You now have " + AP[msg.author.id].AP + "AP coin.")
     } else {
