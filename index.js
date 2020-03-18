@@ -12,6 +12,10 @@ const bot = new Discord.Client();
 const imagePath = "/media/pi/8A02-DF82/lindas/";
 const songPath = "/media/pi/8A02-DF82/songs/";
 
+let cooldown = new Set();
+let cdFiveSec = 5;
+let cdDay = 86400; // a day
+
 let xp = require("./xp.json");
 let AP = require("./AP.json");
 
@@ -46,6 +50,11 @@ function listSort(list) {
   }
   return tmpArr;
 }
+
+setTimeout(() => {
+  cooldown.delete(msg.author.id);
+}, cdFiveSec * 1000)
+
 
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
@@ -100,6 +109,34 @@ bot.on('message', async msg => {
   fs.writeFile("./AP.json", JSON.stringify(AP), (err) => {
     if (err) console.log(err)
   });
+
+//////////////////////////////////////////////////////////////////////////////////
+//message includes content stuff//////////////////////////////////////////////////
+
+  if (msg.content.includes("cheers")) {
+    msg.channel.send("Aye. Cheers.");
+  };
+
+  if (msg.content.includes("spicy")) {
+    msg.react("🌶️")
+    msg.channel.send("ไม่เผ็ดไม่กิน");
+  };
+
+  if (msg.content.includes("cringe")) {
+    msg.react("😬")
+    msg.reply("crinje*")
+  };
+
+  if (msg.content.includes("AP")) {
+    msg.react(APCoinEmoji)
+  };
+//////////////////////////////////////////////////////////////////////////////////
+//all content after here needs to be executed with prefix/////////////////////////
+  if (!msg.content.startsWith(prefix)) return;
+  if (cooldown.has(msg.author.id)) {
+    msg.delete();
+    return msg.reply("Relax bro...")
+  }
 //////////////////////////////////////////////////////////////////////////////////
 //profile thing///////////////////////////////////////////////////////////////////
 
@@ -190,30 +227,13 @@ bot.on('message', async msg => {
         );
         setTimeout(function() {
           msg.member.voiceChannel.leave();
-        }, 10000);
+        }, 5000);
       });
     } else {
       msg.channel.send("Not in a channel mate.");
     }
   };
 
-  if (msg.content.includes("cheers")) {
-    msg.channel.send("Aye. Cheers.");
-  };
-
-  if (msg.content.includes("spicy")) {
-    msg.react("🌶️")
-    msg.channel.send("ไม่เผ็ดไม่กิน");
-  };
-
-  if (msg.content.includes("cringe")) {
-    msg.react("😬")
-    msg.reply("crinje*")
-  };
-
-  if (msg.content.includes("AP")) {
-    msg.react(APCoinEmoji)
-  };
 //////////////////////////////////////////////////////////////////////////////////
 // music stuff ///////////////////////////////////////////////////////////////////
 // this needs a lot of work lmfao ////////////////////////////////////////////////
@@ -284,7 +304,7 @@ bot.on('message', async msg => {
         break;
       }
       if (rolls === roll) {
-        msg.channel.send("You've rolled another" + roll + ". You win.");
+        msg.channel.send("You've rolled another " + roll + ". You win.");
         AP[msg.author.id].AP = AP[msg.author.id].AP + winnings;
         msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
         break;
@@ -304,7 +324,7 @@ bot.on('message', async msg => {
     if (jobChoice === 'mad ute') {
       msg.reply("You are going OT as a " + jobChoice + ".")
       rollNumber = Math.floor(Math.random() * 100)
-      console.log(rollNumber)
+      // console.log(rollNumber)
       if (rollNumber > failChanceForMadUte) {
         msg.channel.send("Chinged up bare ops and took that pack, you got " + pay + " AP coin.")
         AP[msg.author.id].AP = AP[msg.author.id].AP + pay
@@ -351,14 +371,14 @@ bot.on('message', async msg => {
     var amount = args[1] //Coins to gamble
     var winnings = amount * 2
     // check if input is correct
-    if (!flip || !['heads', 'tails'].includes(flip)) return message.reply('Please specify the flip, either heads or tails!')
-    if (!amount) return message.reply('Specify the amount you want to gamble!')
-    if (AP[msg.author.id].AP < amount) return message.reply("You don't have enough AP to gamble.")
+    if (!flip || !['heads', 'tails'].includes(flip)) return msg.reply('Please specify the flip, either heads or tails!')
+    if (!amount) return msg.reply('Specify the amount you want to gamble!')
+    if (AP[msg.author.id].AP < amount) return msg.reply("You don't have enough AP to gamble.")
     // setup game
     var tossChoices = ['heads', 'tails']
     var toss = tossChoices[Math.floor(Math.random() * tossChoices.length)]
     msg.reply("You've bet " + amount + " AP coin that it will be " + flip + ". If you win, you will get " + amount + "AP coin.")
-    if (flip === toss) {
+    if (flip === toss) { 
       msg.channel.send("It is " + toss + " you've won!")
       AP[msg.author.id].AP = AP[msg.author.id].AP + winnings
       msg.channel.send("You now have " + AP[msg.author.id].AP + "AP coin.")
