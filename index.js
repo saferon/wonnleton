@@ -11,9 +11,10 @@ var ffmpeg = require("ffmpeg");
 const bot = new Discord.Client();
 const imagePath = "/media/pi/8A02-DF82/lindas/";
 const songPath = "/media/pi/8A02-DF82/songs/";
-
+// cooldowns
 let cooldown = new Set();
 let cdFiveSec = 5;
+let dayCooldown = new Set();
 let cdDay = 86400; // a day
 
 let xp = require("./xp.json");
@@ -316,16 +317,17 @@ bot.on('message', async msg => {
   };
 
   if (command === 'ot') { 
-    // if (cooldown.has(msg.author.id)) {
-    //   msg.delete();
-    //   return msg.reply("Relax bro...")
-    // }
+    if (dayCooldown.has(msg.author.id)) {
+      msg.delete();
+      return msg.reply("You already went OT today, we'll ride out tomorrow...")
+    }
   
-    // cooldown.add(msg.author.id);
+    dayCooldown.add(msg.author.id);
   
-    // setTimeout(() => {
-    //   cooldown.delete(msg.author.id);
-    // }, cdDay * 1000)
+    setTimeout(() => {
+      dayCooldown.delete(msg.author.id);
+    }, cdDay * 1000)
+    
     var jobs = ['mad ute', 'invest', 'trapper']
     var failChanceForMadUte = 40
     var failChanceForInvestor = 10
