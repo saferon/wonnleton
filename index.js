@@ -52,13 +52,13 @@ function listSort(list) {
   return tmpArr;
 }
 
-function negativeAP(AP) {
-  if (AP < 0){
-    return AP = 0;
-  } else {
-    return;
-  }
-}
+// function negativeAP(AP) {
+//   if (AP < 0) {
+//     return AP = 0;
+//   } else {
+//     return;
+//   }
+// }
 
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
@@ -70,7 +70,12 @@ bot.on('message', async msg => {
   var args = msg.content.split(' ').slice(1);
   //skips anything a bot sends
   if (msg.author.bot) return;
-  negativeAP(AP[msg.author.id].AP);
+  // negativeAP(AP[msg.author.id].AP);
+  if (AP[msg.author.id].AP < 0) {
+    AP[msg.author.id].AP = 0
+  } else {
+    continue;
+  }
 //////////////////////////////////////////////////////////////////////////////////
 //xp system///////////////////////////////////////////////////////////////////////
   let xpAdd = Math.floor(Math.random() * 7) + 8;
@@ -305,7 +310,7 @@ bot.on('message', async msg => {
     } else if (roll === 2 || roll === 3 || roll === 12) {
       msg.channel.send("You man lost " + amount + " AP coin.");
       AP[msg.author.id].AP = AP[msg.author.id].AP - amount;
-      negativeAP(AP[msg.author.id].AP);
+      // negativeAP(AP[msg.author.id].AP);
       msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
     } else {
       while (roll != 0) {
@@ -317,7 +322,7 @@ bot.on('message', async msg => {
       if (rolls === 7) {
         msg.channel.send("You've rolled a 7 and lost.");
         AP[msg.author.id].AP = AP[msg.author.id].AP - amount;
-        negativeAP(AP[msg.author.id].AP);
+        // negativeAP(AP[msg.author.id].AP);
         msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
         break;
       }
@@ -361,7 +366,7 @@ bot.on('message', async msg => {
       } else {
         msg.channel.send("You got bored up 🔪😂😂")
         AP[msg.author.id].AP = AP[msg.author.id].AP - pay
-        negativeAP(AP[msg.author.id].AP);
+        // negativeAP(AP[msg.author.id].AP);
         msg.channel.send("You lost " + pay + " AP coin.")
       }     
     }
@@ -376,7 +381,7 @@ bot.on('message', async msg => {
       } else {
         msg.channel.send("📉 DOOMPT EET. 📉")
         AP[msg.author.id].AP = AP[msg.author.id].AP - pay
-        negativeAP(AP[msg.author.id].AP);
+        // negativeAP(AP[msg.author.id].AP);
         msg.channel.send("You lost " + pay + " AP coin.")
       }     
     }
@@ -391,7 +396,7 @@ bot.on('message', async msg => {
       } else {
         msg.channel.send("You man stepped out and got robbed...")
         AP[msg.author.id].AP = AP[msg.author.id].AP - pay
-        negativeAP(AP[msg.author.id].AP);
+        // negativeAP(AP[msg.author.id].AP);
         msg.channel.send("You lost " + pay + " AP coin.")
       }     
     }
@@ -417,7 +422,7 @@ bot.on('message', async msg => {
     } else {
       msg.channel.send("It is " + toss + " you lose!")
       AP[msg.author.id].AP = AP[msg.author.id].AP - amount
-      negativeAP(AP[msg.author.id].AP);
+      // negativeAP(AP[msg.author.id].AP);
       msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.")
     }
   };
