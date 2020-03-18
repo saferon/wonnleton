@@ -306,10 +306,10 @@ bot.on('message', async msg => {
     msg.channel.send("You rolled " + roll + " 🎲🎲");
     if (roll === 7 || roll === 11) {
       msg.channel.send("Bill it up, you gained " + winnings + " AP coin. 💰");
-      AP[msg.author.id].AP = AP[msg.author.id].AP + winnings;
+      AP[msg.author.id].AP += winnings;
     } else if (roll === 2 || roll === 3 || roll === 12) {
       msg.channel.send("You man lost " + amount + " AP coin.");
-      AP[msg.author.id].AP = AP[msg.author.id].AP - amount;
+      AP[msg.author.id].AP -= amount;
       // negativeAP(AP[msg.author.id].AP);
       msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
     } else {
@@ -321,14 +321,14 @@ bot.on('message', async msg => {
       msg.channel.send("Rolled " + rolls + ".").then(msg => {msg.delete(2000)});
       if (rolls === 7) {
         msg.channel.send("You've rolled a 7 and lost.");
-        AP[msg.author.id].AP = AP[msg.author.id].AP - amount;
+        AP[msg.author.id].AP -= amount;
         // negativeAP(AP[msg.author.id].AP);
         msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
         break;
       }
       if (rolls === roll) {
         msg.channel.send("You've rolled another " + roll + ". You win. 💰");
-        AP[msg.author.id].AP = AP[msg.author.id].AP + winnings;
+        AP[msg.author.id].AP += winnings;
         msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
         break;
       }
@@ -361,11 +361,11 @@ bot.on('message', async msg => {
       // console.log(rollNumber)
       if (rollNumber > failChanceForMadUte) {
         msg.channel.send("Chinged up bare ops and took that pack, you got " + pay + " AP coin. 💰")
-        AP[msg.author.id].AP = AP[msg.author.id].AP + pay
+        AP[msg.author.id].AP += pay
         msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.")
       } else {
         msg.channel.send("You got bored up 🔪😂😂")
-        AP[msg.author.id].AP = AP[msg.author.id].AP - pay
+        AP[msg.author.id].AP -= pay
         // negativeAP(AP[msg.author.id].AP);
         msg.channel.send("You lost " + pay + " AP coin.")
       }     
@@ -376,11 +376,11 @@ bot.on('message', async msg => {
       // console.log(rollNumber)
       if (rollNumber > failChanceForInvestor) {
         msg.channel.send("📈 Bogdanoff has blessed you today, and you got " + pay + " AP coin. 📈")
-        AP[msg.author.id].AP = AP[msg.author.id].AP + pay
+        AP[msg.author.id].AP += pay
         msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.")
       } else {
         msg.channel.send("📉 DOOMPT EET. 📉")
-        AP[msg.author.id].AP = AP[msg.author.id].AP - pay
+        AP[msg.author.id].AP -= pay
         // negativeAP(AP[msg.author.id].AP);
         msg.channel.send("You lost " + pay + " AP coin.")
       }     
@@ -391,18 +391,18 @@ bot.on('message', async msg => {
       // console.log(rollNumber)
       if (rollNumber > failChanceForTrapper) {
         msg.channel.send("You sold some packs to junkies and got " + pay + " AP coin. 💰")
-        AP[msg.author.id].AP = AP[msg.author.id].AP + pay
+        AP[msg.author.id].AP += pay
         msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.")
       } else {
         msg.channel.send("You man stepped out and got robbed...")
-        AP[msg.author.id].AP = AP[msg.author.id].AP - pay
+        AP[msg.author.id].AP -= pay
         // negativeAP(AP[msg.author.id].AP);
         msg.channel.send("You lost " + pay + " AP coin.")
       }     
     }
   };
 
-    if (command === 'coinflip') {
+  if (command === 'coinflip') {
  
     var flip = args[0] //Heads or Tails
     var amount = args[1] //Coins to gamble
@@ -417,11 +417,11 @@ bot.on('message', async msg => {
     msg.reply("You've bet " + amount + " AP coin that it will be " + flip + ". If you win, you will get " + winnings + " AP coin.")
     if (flip === toss) { 
       msg.channel.send("It is " + toss + " you've won! 💰")
-      AP[msg.author.id].AP = AP[msg.author.id].AP + winnings
+      AP[msg.author.id].AP += winnings
       msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.")
     } else {
       msg.channel.send("It is " + toss + " you lose!")
-      AP[msg.author.id].AP = AP[msg.author.id].AP - amount
+      AP[msg.author.id].AP -= amount
       // negativeAP(AP[msg.author.id].AP);
       msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.")
     }
