@@ -132,7 +132,7 @@ bot.on('message', async msg => {
     msg.delete();
     return msg.reply("Relax bro...")
   }
-  
+
   cooldown.add(msg.author.id);
 
   setTimeout(() => {
@@ -316,6 +316,16 @@ bot.on('message', async msg => {
   };
 
   if (command === 'ot') { 
+    if (cooldown.has(msg.author.id)) {
+      msg.delete();
+      return msg.reply("Relax bro...")
+    }
+  
+    cooldown.add(msg.author.id);
+  
+    setTimeout(() => {
+      cooldown.delete(msg.author.id);
+    }, cdDay * 1000)
     var jobs = ['mad ute', 'invest', 'trapper']
     var failChanceForMadUte = 40
     var failChanceForInvestor = 10
@@ -340,7 +350,7 @@ bot.on('message', async msg => {
     if (jobChoice === 'invest') {
       msg.reply("You wanted to go OT, but you've decided to " + jobChoice + " instead.")
       rollNumber = Math.floor(Math.random() * 100)
-      console.log(rollNumber)
+      // console.log(rollNumber)
       if (rollNumber > failChanceForInvestor) {
         msg.channel.send("📈 Bogdanoff has blessed you today, and you got " + pay + " AP coin. 📈")
         AP[msg.author.id].AP = AP[msg.author.id].AP + pay
@@ -354,7 +364,7 @@ bot.on('message', async msg => {
     if (jobChoice === 'trapper') {
       msg.reply("Diligent " + jobChoice + " stepping out.")
       rollNumber = Math.floor(Math.random() * 100)
-      console.log(rollNumber)
+      // console.log(rollNumber)
       if (rollNumber > failChanceForTrapper) {
         msg.channel.send("You sold some packs to junkies and got " + pay + " AP coin.")
         AP[msg.author.id].AP = AP[msg.author.id].AP + pay
