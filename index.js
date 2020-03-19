@@ -288,8 +288,6 @@ bot.on('message', async msg => {
     }
   };
 
-  
-
   if (command === 'play') {
     function play(connection, msg) {
       var server = queued[msg.guild.id];
