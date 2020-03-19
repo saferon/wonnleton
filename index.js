@@ -301,7 +301,7 @@ bot.on('message', async msg => {
         }
       })
     }
-    link = args[0]
+    var link = args[0]
     console.log(link)
     if (!link || !link.includes("www.youtube.com/")) return msg.reply("You need to give a youtube link to play.")
     if (!msg.member.voiceChannel) return msg.reply("You must be in a voice channel.")
