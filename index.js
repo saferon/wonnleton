@@ -343,14 +343,12 @@ bot.on('message', async msg => {
       if (!server || server.queue.length === 0) { // updated
         msg.channel.send("Queue is empty!");
       } else {
-        var printQueue = []
         for (var i = 0, j = 1; i < server.queue.length; i++, j++) {
             ytdl.getInfo(server.queue[i], function(err, info) {
             if (err) throw err
             var positions = info.title;
             console.log("in the for loop " + positions);
-            printQueue.push(positions);
-            msg.channel.send("```" + j + " " + printQueue[j-1] + "```");
+            msg.channel.send("```" + j + " " + positions + "```");
           });
         }
       }
