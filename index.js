@@ -343,7 +343,7 @@ bot.on('message', async msg => {
         for (var i = server.queue.length -1; i < server.queue.length; i++) {
           ytdl.getInfo(server.queue[i], function(err, info) {
             if (err) throw err
-            printQueue.push(String(i + 1) + " - " + info)
+            printQueue.push(String(i + 1) + " - " + info.title)
           })
         }
         // msg.channel.send(server.queue);
