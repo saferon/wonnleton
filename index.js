@@ -348,11 +348,12 @@ bot.on('message', async msg => {
             ytdl.getInfo(server.queue[i], function(err, info) {
             if (err) throw err
             var positions = info.title;
-            console.log("queue position " + i+1 + " - " + positions);
-            printQ.push("`" + i+1 + " - " + positions + "`");
+            var position = i + 1
+            console.log("queue position " + position + " - " + positions);
+            printQ.push("`"+ position + " - " + positions +  "`");
           }); 
-        msg.channel.send(printQ)
         }
+        msg.channel.send(printQ)
       }
     } else {
       if (link.includes("www.youtube.com/" || "https://youtu.be/")) {
