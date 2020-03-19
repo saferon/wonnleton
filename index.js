@@ -341,6 +341,8 @@ bot.on('message', async msg => {
       } else {
         var printQueue = []
         for (var i = 0; i < server.queue.length; i++) {
+          console.log(server.queue.length)
+          console.log(i)
             ytdl.getInfo(server.queue[i], function(err, info) {
             if (err) throw err
             var positions = info.title;
@@ -348,6 +350,8 @@ bot.on('message', async msg => {
             printQueue.push(positions);
             if (i === server.queue.length) {
               for (var j = 1; j <= printQueue.length; j++) {
+                console.log(printQueue.length)
+                console.log(j)
                 console.log("Sending out " + j + " " + printQueue[j-1])
                 msg.channel.send("```" + j + " " + printQueue[j-1] + "```");
               }
