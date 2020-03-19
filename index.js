@@ -348,8 +348,8 @@ bot.on('message', async msg => {
             if (err) throw err
             var positions = info.title;
             console.log("in the for loop " + positions);
-            msg.channel.send("```" + j + " " + positions + "```");
           });
+          msg.channel.send("```" + j + " " + positions + "```");
         }
       }
     } else {
