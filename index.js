@@ -345,7 +345,7 @@ bot.on('message', async msg => {
             if (err) throw err
             var position = i + 1
             var positions = info.title
-            var posi = toString(position) + position
+            var posi = position + positions
             console.log("in the for loop " + posi)
             printQueue.push(posi)
           })
