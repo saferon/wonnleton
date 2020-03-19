@@ -260,8 +260,8 @@ bot.on('message', async msg => {
 
 //////////////////////////////////////////////////////////////////////////////////
 // music stuff ///////////////////////////////////////////////////////////////////
-// this needs a lot of work lmfao ////////////////////////////////////////////////
 
+// this needs a lot of work lmfao ////////////////////////////////////////////////
   // if (command === 'radio') {  // quoted out while it isn't working too well
   //   var songList = fs.readdirSync(songPath);
   //   var index = songList.indexOf("desktop.ini");
@@ -345,7 +345,7 @@ bot.on('message', async msg => {
             if (err) throw err
             var positions = info.title;
             console.log("in the for loop " + positions);
-            printQueue.push(posi);
+            printQueue.push(positions);
             if (i === server.queue.length) {
               for (var j = 1; j <= printQueue.length; j++) {
                 console.log("Sending out " + j + " " + printQueue[j-1])
