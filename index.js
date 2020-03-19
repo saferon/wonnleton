@@ -403,12 +403,12 @@ bot.on('message', async msg => {
       queue: []
     }
     if (!server || server.queue.length === 0) {
-      ytdl.getInfo(server.queue[0], function(err, info) {
-        if (err) throw err
-        msg.channel.send("Now playing " + info.title)
-      })} else {
-        msg.channel.send("Nothing playing!")
-      }
+      msg.channel.send("Nothing playing!")
+      } else {
+        ytdl.getInfo(server.queue[0], function(err, info) {
+          if (err) throw err
+          msg.channel.send("Now playing " + info.title)
+      })}
   }
   
 
