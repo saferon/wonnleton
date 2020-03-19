@@ -346,7 +346,7 @@ bot.on('message', async msg => {
             var position = i + 1
             var positions = (info.title)
             console.log("in the for loop " + positions)
-            printQueue.push(position + positions)
+            printQueue.push(`${position}  ${positions}`)
           })
         }
         // msg.channel.send(server.queue);
