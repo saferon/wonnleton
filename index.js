@@ -293,6 +293,11 @@ bot.on('message', async msg => {
     function play(connection, msg) {
       var server = queued[msg.guild.id];
       server.dispatcher = connection.playStream(ytdl(server.queue[0], {filter: "audioonly"}));
+      ytdl.getInfo(server.queue[0], function(err, info) {
+        if (err) throw err
+        console.log(info.title)
+      })
+      // console.log("Now Playing "+ title);
       server.queue.shift();
       server.dispatcher.on("end", function(){
         if (server.queue[0]){
@@ -390,6 +395,11 @@ bot.on('message', async msg => {
       msg.guild.voiceChannel.disconnect();
     }
   };
+
+  if (command === 'nowplaying' || command === 'np') {
+    var server = queued[msg.guild.id];
+    if (server.dispatcher) server.dispatcher; // need to return song playing now
+  }
 
 
 //////////////////////////////////////////////////////////////////////////////////
