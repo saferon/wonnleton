@@ -296,6 +296,7 @@ bot.on('message', async msg => {
       ytdl.getInfo(server.queue[0], function(err, info) {
         if (err) throw err
         console.log(info.title)
+        msg.channel.send("Now playing " + info.title)
       })
       // console.log("Now Playing "+ title);
       server.queue.shift();
@@ -398,8 +399,15 @@ bot.on('message', async msg => {
 
   if (command === 'nowplaying' || command === 'np') {
     var server = queued[msg.guild.id];
-    if (server.dispatcher) server.dispatcher; // need to return song playing now
+    if (server.dispatcher) {
+      ytdl.getInfo(server.queue[0], function(err, info) {
+        if (err) throw err
+        msg.channel.send("Now playing " + info.title)
+      })} else {
+        msg.channel.send("Nothing playing!")
+      }
   }
+  
 
 
 //////////////////////////////////////////////////////////////////////////////////
