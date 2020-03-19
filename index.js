@@ -326,10 +326,10 @@ bot.on('message', async msg => {
     console.log("queued " + link)
     if (!msg.member.voiceChannel) return msg.reply("You must be in a voice channel.")
     if (args.length === 0) { 
-      if (server.queue.length > 0) {
-        msg.channel.send(server.queue);
-      } else {
+      if (!server.queue) {
         msg.channel.send("Queue is empty!");
+      } else {
+        msg.channel.send(server.queue);
       }
     } else {
       if (link.includes("www.youtube.com/" || "https://youtu.be/")) {
