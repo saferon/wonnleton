@@ -309,7 +309,7 @@ bot.on('message', async msg => {
       queue: []
     }
     var server = queued[msg.guild.id];
-    server.queue.push(args[0]);
+    server.queue.push(link);
     if(!msg.guild.voiceChannel) msg.member.voiceChannel.join().then(function(connection) {
       play(connection, msg);
     })
