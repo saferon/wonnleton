@@ -348,10 +348,9 @@ bot.on('message', async msg => {
             var posi = position + positions
             console.log("in the for loop " + posi)
             printQueue.push(posi)
-          })
+          }).then(msg.channel.send(printQueue));
         }
         // msg.channel.send(server.queue);
-        msg.channel.send(printQueue);
       }
     } else {
       if (link.includes("www.youtube.com/" || "https://youtu.be/")) {
