@@ -304,7 +304,7 @@ bot.on('message', async msg => {
     }
     var link = args[0]
     console.log("playing " + link)
-    // if (!server) {
+    // if (!server) { // this if causes the error, cannot get server queue length
     if (!link || !link.includes("www.youtube.com/" || "https://youtu.be/")) {
       msg.reply("You need to give a youtube link to play.")
     }
@@ -330,7 +330,7 @@ bot.on('message', async msg => {
     }
     if (!msg.member.voiceChannel) return msg.reply("You must be in a voice channel.")
     if (!link) { 
-      if (!server) { // this line causes the error, cannot get server queue length
+      if (!server || server.queue.length === 0) { // updated
         msg.channel.send("Queue is empty!");
       } else {
         msg.channel.send(server.queue);
