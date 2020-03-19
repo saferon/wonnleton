@@ -289,7 +289,7 @@ bot.on('message', async msg => {
   //   }
   // };
 
-  if (command === 'play') {
+  if (command === 'play' || command === 'p') {
     function play(connection, msg) {
       var server = queued[msg.guild.id];
       server.dispatcher = connection.playStream(ytdl(server.queue[0], {filter: "audioonly"}));
@@ -320,12 +320,12 @@ bot.on('message', async msg => {
     })
   };
 
-  if (command === 'queue') {
+  if (command === 'queue' || command === 'q') {
     var server = queued[msg.guild.id];
     var link = args[0]
     console.log("queued " + link)
     if (!msg.member.voiceChannel) return msg.reply("You must be in a voice channel.")
-    if (args.length === 0) { // changed to undefined, not tested.
+    if (args.length === 0) { 
       msg.channel.send(server.queue);
     } else {
       if (link.includes("www.youtube.com/" || "https://youtu.be/")) {
@@ -336,6 +336,22 @@ bot.on('message', async msg => {
           msg.channel.send("Added to the queue!") // always seems to send this even when !play called.
       } else {
           msg.reply("You need to give a youtube link to play.")
+      }
+    }
+  };
+
+  if (command === 'dequeue' || command === 'deq') {
+    var server = queued[msg.guild.id];
+    if (args.length === 0) return msg.reply ("You must specify the link or queue number!")
+    if (args[0].includes("www.youtube.com/" || "https://youtu.be/")) {
+      var index = server.queue.indexOf(args[0]);
+      server.queue.splice(index);
+    } else {
+      var index = args[0] - 1;
+      try {
+        server.queue.splice(index);
+      } catch (err) {
+        console.err(err);
       }
     }
   };
