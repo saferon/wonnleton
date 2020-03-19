@@ -348,7 +348,10 @@ bot.on('message', async msg => {
             var posi = position + positions
             console.log("in the for loop " + posi)
             printQueue.push(posi)
-          }).then(msg.channel.send(printQueue));
+            if (i === server.queue.length - 1) {
+              msg.channel.send(printQueue);
+            }
+          });
         }
         // msg.channel.send(server.queue);
       }
