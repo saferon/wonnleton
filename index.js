@@ -330,7 +330,7 @@ bot.on('message', async msg => {
     }
     if (!msg.member.voiceChannel) return msg.reply("You must be in a voice channel.")
     if (!link) { 
-      if (server.queue.length === 0) {
+      if (!server.queue) { // this line causes the error, cannot get server queue length
         msg.channel.send("Queue is empty!");
       } else {
         msg.channel.send(server.queue);
