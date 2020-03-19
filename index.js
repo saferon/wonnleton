@@ -11,6 +11,7 @@ var ffmpeg = require("ffmpeg");
 const bot = new Discord.Client();
 const imagePath = "/media/pi/8A02-DF82/lindas/";
 const songPath = "/media/pi/8A02-DF82/songs/";
+const ytdl = require("ytdl-core")
 // cooldowns
 let cooldown = new Set();
 let cdFiveSec = 5;
@@ -21,6 +22,8 @@ let xp = require("./xp.json");
 let AP = require("./AP.json");
 
 let APCoinEmoji = "627897331068436481";
+
+var queued = {};
 
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
@@ -258,7 +261,7 @@ bot.on('message', async msg => {
 //////////////////////////////////////////////////////////////////////////////////
 // music stuff ///////////////////////////////////////////////////////////////////
 // this needs a lot of work lmfao ////////////////////////////////////////////////
-  if (command === 'song') {
+  if (command === 'radio') {
     var songList = fs.readdirSync(songPath);
     var index = songList.indexOf("desktop.ini");
     songList.splice(index, 1);
@@ -284,6 +287,52 @@ bot.on('message', async msg => {
       msg.channel.send("Not in a channel mate.");
     }
   };
+
+  function play(connection, message) {
+    var server = queued[msg.guild.id];
+    server.dispatcher = connection.playStream(ytdl(queued.queue[0], {filter: "audioonly"}));
+    server.queue.shift();
+    server.dispatcher.on("end", function(){
+      if (server.queue[0]){
+        play(connection, message);
+      } else {
+        connection.disconnect();
+      }
+    })
+  }
+
+  if (command === 'play') {
+    link = args[0]
+    if (!link || !['www.youtube.com/'].includes(link)) return msg.reply("You need to give a youtube link to play.")
+    if (!msg.member.voiceChannel) return msg.reply("You must be in a voice channel.")
+    if (!queued[msg.guild.id]) queued[msg.guild.id] = {
+      queue: []
+    }
+    var server = queued[msg.guild.id];
+    server.queue.push(args[0]);
+    if(!msg.guild.voiceChannel) msg.member.voiceChannel.join().then(function(connection){
+      play(connection, msg);
+    })
+  }
+
+  if (command === 'skip') {
+    var server = queued[msg.guild.id];
+    if (server.dispatcher) server.dispatcher.end();
+    msg.channel.send("Skipped.")
+  }
+
+  if (command === 'stop') {
+    var server = queued[msg.guild.id];
+    if (msg.guild.voiceChannel) {
+      for (var i = server.queue.length -1; i >=0, i--) {
+        server.queue.splice(i, 1);
+      }
+      server.dispatcher.end();
+      console.log("-----------------")
+      console.log("stopped the queue")
+    }
+    if (msg.guild.connection) msg.guild.voiceChannel.disconnect();
+  }
 
 //////////////////////////////////////////////////////////////////////////////////
 // gambling stuff ////////////////////////////////////////////////////////////////
@@ -317,12 +366,13 @@ bot.on('message', async msg => {
       // negativeAP(AP[msg.author.id].AP);
       msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
     } else {
+      msg.channel.send("Rolling again.")
       while (roll != 0) {
-      msg.channel.send("Rolling again.").then(msg => {msg.delete(2000)});
+      // msg.channel.send("Rolling again.").then(msg => {msg.delete(2000)});
       var rolls1 = die[Math.floor(Math.random() * die.length)]
       var rolls2 = die[Math.floor(Math.random() * die.length)]
       var rolls = rolls1 + rolls2
-      msg.channel.send("Rolled " + rolls + ".").then(msg => {msg.delete(2000)});
+      msg.channel.send("Rolled " + rolls + ".").then(msg => {msg.delete(3000)});
       if (rolls === 7) {
         msg.channel.send("You've rolled a 7 and lost.");
         AP[msg.author.id].AP -= amount;
