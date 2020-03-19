@@ -340,7 +340,7 @@ bot.on('message', async msg => {
         msg.channel.send("Queue is empty!");
       } else {
         var printQueue = []
-        for (var i = server.queue.length -1; i < server.queue.length; i++) {
+        for (var i = 0; i < server.queue.length; i++) {
           ytdl.getInfo(server.queue[i], function(err, info) {
             if (err) throw err
             var positions = (i + 1, " - ", info.title)
