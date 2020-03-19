@@ -320,25 +320,25 @@ bot.on('message', async msg => {
     })
   };
 
-  if (command === 'queue' || 'q') {
-    var server = queued[msg.guild.id];
-    var link = args[0]
-    console.log(link)
-    if (!msg.member.voiceChannel) return msg.reply("You must be in a voice channel.")
-    if (!link) { 
-      msg.channel.send(server.queue);
-    } else {
-      if (link.includes("www.youtube.com/" || "https://youtu.be/")) {
-        // if (!queued[msg.guild.id]) queued[msg.guild.id] = {
-        //   queue: []
-        // }
-        server.queue.push(link);
-        msg.channel.send("Added to the queue!")
-      } else {
-        msg.reply("You need to give a youtube link to play.")
-      }
-    }
-  };
+  // if (command === 'queue' || 'q') {
+  //   var server = queued[msg.guild.id];
+  //   var link = args[0]
+  //   console.log(link)
+  //   if (!msg.member.voiceChannel) return msg.reply("You must be in a voice channel.")
+  //   if (!link) { 
+  //     msg.channel.send(server.queue);
+  //   } else {
+  //     if (link.includes("www.youtube.com/" || "https://youtu.be/")) {
+  //       // if (!queued[msg.guild.id]) queued[msg.guild.id] = {
+  //       //   queue: []
+  //       // }
+  //       server.queue.push(link);
+  //       msg.channel.send("Added to the queue!")
+  //     } else {
+  //       msg.reply("You need to give a youtube link to play.")
+  //     }
+  //   }
+  // };
 
   if (command === 'skip') {
     var server = queued[msg.guild.id];
