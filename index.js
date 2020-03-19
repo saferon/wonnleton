@@ -348,7 +348,7 @@ bot.on('message', async msg => {
             var positions = info.title;
             console.log("in the for loop " + positions);
             printQueue.push(positions);
-            if (i === server.queue.length-1) {
+            if (i === server.queue.length) {
               for (var j = 1; j <= printQueue.length; j++) {
                 console.log("printQlen " + printQueue.length)
                 console.log("j " + j)
