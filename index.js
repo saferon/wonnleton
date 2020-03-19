@@ -304,8 +304,10 @@ bot.on('message', async msg => {
     }
     var link = args[0]
     console.log("playing" + link)
-    if (!link || !link.includes("www.youtube.com/" || "https://youtu.be/")) {
-      msg.reply("You need to give a youtube link to play.")
+    if (!server.queue) {
+      if (!link || !link.includes("www.youtube.com/" || "https://youtu.be/")) {
+        msg.reply("You need to give a youtube link to play.")
+      }
     }
     if (!msg.member.voiceChannel) {
       msg.reply("You must be in a voice channel.")
@@ -327,7 +329,7 @@ bot.on('message', async msg => {
       queue: []
     }
     if (!msg.member.voiceChannel) return msg.reply("You must be in a voice channel.")
-    if (args.length === 0) { 
+    if (!link) { 
       if (server.queue.length === 0) {
         msg.channel.send("Queue is empty!");
       } else {
@@ -338,11 +340,11 @@ bot.on('message', async msg => {
         if (!queued[msg.guild.id]) queued[msg.guild.id] = {
           queue: []
         }
-          server.queue.push(link);
-          console.log("queued " + link)
-          msg.channel.send("Added to the queue!") 
+        server.queue.push(link);
+        console.log("queued " + link)
+        msg.channel.send("Added to the queue!") 
       } else {
-          msg.reply("You need to give a youtube link to play.")
+        msg.reply("You need to give a youtube link to play.")
       }
     }
   };
