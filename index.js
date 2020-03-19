@@ -326,14 +326,18 @@ bot.on('message', async msg => {
     console.log("queued " + link)
     if (!msg.member.voiceChannel) return msg.reply("You must be in a voice channel.")
     if (args.length === 0) { 
-      msg.channel.send(server.queue);
+      if (server.queue.length > 0) {
+        msg.channel.send(server.queue);
+      } else {
+        msg.channel.send("Queue is empty!");
+      }
     } else {
       if (link.includes("www.youtube.com/" || "https://youtu.be/")) {
         if (!queued[msg.guild.id]) queued[msg.guild.id] = {
           queue: []
         }
           server.queue.push(link);
-          msg.channel.send("Added to the queue!") // always seems to send this even when !play called.
+          msg.channel.send("Added to the queue!") 
       } else {
           msg.reply("You need to give a youtube link to play.")
       }
@@ -342,14 +346,17 @@ bot.on('message', async msg => {
 
   if (command === 'dequeue' || command === 'deq') {
     var server = queued[msg.guild.id];
+    if (!msg.member.voiceChannel) return msg.reply("You must be in a voice channel.")
     if (args.length === 0) return msg.reply ("You must specify the link or queue number!")
     if (args[0].includes("www.youtube.com/" || "https://youtu.be/")) {
       var index = server.queue.indexOf(args[0]);
       server.queue.splice(index);
+      msg.channel.send("Removed from the queue!");
     } else {
       var index = args[0] - 1;
       try {
         server.queue.splice(index);
+        msg.channel.send("Removed from the queue!")
       } catch (err) {
         console.err(err);
       }
@@ -358,6 +365,7 @@ bot.on('message', async msg => {
 
   if (command === 'skip') {
     var server = queued[msg.guild.id];
+    if (!msg.member.voiceChannel) return msg.reply("You must be in a voice channel.")
     if (server.dispatcher) server.dispatcher.end();
     msg.channel.send("Skipped.")
   };
