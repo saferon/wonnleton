@@ -341,11 +341,12 @@ bot.on('message', async msg => {
       } else {
         var printQueue = []
         for (var i = 0; i < server.queue.length; i++) {
-          ytdl.getInfo(server.queue[i], function(err, info) {
+            ytdl.getInfo(server.queue[i], function(err, info) {
             if (err) throw err
+            var position = i + 1
             var positions = (info.title)
             console.log("in the for loop " + positions)
-            printQueue.push(toString(i+1) + positions)
+            printQueue.push(position + positions)
           })
         }
         // msg.channel.send(server.queue);
