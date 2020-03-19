@@ -295,7 +295,7 @@ bot.on('message', async msg => {
       server.dispatcher = connection.playStream(ytdl(server.queue[0], {filter: "audioonly"}));
       ytdl.getInfo(server.queue[0], function(err, info) {
         if (err) throw err
-        console.log(info.title)
+        console.log("now playing " + info.title)
         msg.channel.send("Now playing " + info.title)
       })
       // console.log("Now Playing "+ title);
@@ -309,7 +309,7 @@ bot.on('message', async msg => {
       })
     }
     var link = args[0]
-    console.log("playing " + link)
+    console.log("play added " + link)
     // if (!server) { // this if causes the error, cannot get server queue length
     if (!link || !link.includes("www.youtube.com/" || "https://youtu.be/")) {
       msg.reply("You need to give a youtube link to play.")
@@ -344,7 +344,7 @@ bot.on('message', async msg => {
           ytdl.getInfo(server.queue[i], function(err, info) {
             if (err) throw err
             var positions = (info.title)
-            console.log(positions)
+            console.log("in the for loop " + positions)
             printQueue.push(toString(i+1) + positions)
           })
         }
