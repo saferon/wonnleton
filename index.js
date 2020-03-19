@@ -289,7 +289,7 @@ bot.on('message', async msg => {
   //   }
   // };
 
-  if (command === 'play' || 'p') {
+  if (command === 'play') {
     function play(connection, msg) {
       var server = queued[msg.guild.id];
       server.dispatcher = connection.playStream(ytdl(server.queue[0], {filter: "audioonly"}));
@@ -320,7 +320,7 @@ bot.on('message', async msg => {
     })
   };
 
-  if (command === 'queue' || 'q') {
+  if (command === 'queue') {
     var server = queued[msg.guild.id];
     var link = args[0]
     console.log("queued " + link)
