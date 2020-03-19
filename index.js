@@ -324,7 +324,7 @@ bot.on('message', async msg => {
   if (command === 'stop') {
     var server = queued[msg.guild.id];
     if (msg.guild.voiceChannel) {
-      for (var i = server.queue.length -1; i >=0, i--) {
+      for (var i = server.queue.length -1; i >=0, i--;) {
         server.queue.splice(i, 1);
       }
       server.dispatcher.end();
