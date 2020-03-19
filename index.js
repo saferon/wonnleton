@@ -349,8 +349,10 @@ bot.on('message', async msg => {
             console.log("in the for loop " + posi);
             printQueue.push(posi);
             if (i === server.queue.length) {
-              console.log("Sending out printQueue");
-              msg.channel.send(printQueue);
+              for (var j = 1; j <= printQueue.length; j++) {
+                console.log("Sending out " + j + printQueue[j-1])
+                msg.channel.send("```" + j + printQueue[j-1] + "```");
+              }
             }
           });
         }
