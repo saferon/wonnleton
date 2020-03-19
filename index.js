@@ -339,7 +339,15 @@ bot.on('message', async msg => {
       if (!server || server.queue.length === 0) { // updated
         msg.channel.send("Queue is empty!");
       } else {
-        msg.channel.send(server.queue);
+        var printQueue = []
+        for (var i = server.queue.length -1; i < server.queue.length; i++) {
+          ytdl.getInfo(server.queue[i], function(err, info) {
+            if (err) throw err
+            printQueue.push(String(i + 1) + " - " + info)
+          })
+        }
+        // msg.channel.send(server.queue);
+        msg.channel.send(printQueue);
       }
     } else {
       if (link.includes("www.youtube.com/" || "https://youtu.be/")) {
