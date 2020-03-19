@@ -349,7 +349,7 @@ bot.on('message', async msg => {
             if (err) throw err
             var positions = info.title;
             console.log("queue position " + i+1 + " - " + positions);
-            printQ.push("`" + j+1 + " - " + positions + "`");
+            printQ.push("`" + i+1 + " - " + positions + "`");
           }); 
         msg.channel.send(printQ)
         }
