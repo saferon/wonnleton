@@ -323,10 +323,12 @@ bot.on('message', async msg => {
   if (command === 'queue' || command === 'q') {
     var server = queued[msg.guild.id];
     var link = args[0]
-    console.log("queued " + link)
+    if (!queued[msg.guild.id]) queued[msg.guild.id] = {
+      queue: []
+    }
     if (!msg.member.voiceChannel) return msg.reply("You must be in a voice channel.")
     if (args.length === 0) { 
-      if (!server.queue) {
+      if (server.queue.length === 0) {
         msg.channel.send("Queue is empty!");
       } else {
         msg.channel.send(server.queue);
@@ -337,6 +339,7 @@ bot.on('message', async msg => {
           queue: []
         }
           server.queue.push(link);
+          console.log("queued " + link)
           msg.channel.send("Added to the queue!") 
       } else {
           msg.reply("You need to give a youtube link to play.")
