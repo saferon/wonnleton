@@ -344,25 +344,15 @@ bot.on('message', async msg => {
         msg.channel.send("Queue is empty!");
       } else {
         var printQueue = []
-        for (var i = 0; i < server.queue.length; i++) {
-          // console.log("serverQlen " + server.queue.length)
-          // console.log("i " + i)
+        for (var i = 0, j = 1; i < server.queue.length; i++, j++) {
             ytdl.getInfo(server.queue[i], function(err, info) {
             if (err) throw err
             var positions = info.title;
             console.log("in the for loop " + positions);
             printQueue.push(positions);
-            if (i === server.queue.length) {
-              for (var j = 1; j <= printQueue.length; j++) {
-                // console.log("printQlen " + printQueue.length)
-                // console.log("j " + j)
-                // console.log("Sending out " + j + " " + printQueue[j-1])
-                msg.channel.send("```" + j + " " + printQueue[j-1] + "```");
-              }
-            }
+            msg.channel.send("```" + j + " " + printQueue[j-1] + "```");
           });
         }
-        // msg.channel.send(server.queue);
       }
     } else {
       if (link.includes("www.youtube.com/" || "https://youtu.be/")) {
