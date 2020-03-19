@@ -345,16 +345,24 @@ bot.on('message', async msg => {
       } else {
         var printQueue = []
         for (var i = 0; i < server.queue.length; i++) {
-          for (var j = 1; j <= server.queue.length; j++) {
+          // console.log("serverQlen " + server.queue.length)
+          // console.log("i " + i)
             ytdl.getInfo(server.queue[i], function(err, info) {
             if (err) throw err
             var positions = info.title;
             console.log("in the for loop " + positions);
             printQueue.push(positions);
-            msg.channel.send("```" + j + " " + printQueue[i] + "```"); 
+            if (i === server.queue.length) {
+              for (var j = 1; j <= printQueue.length; j++) {
+                // console.log("printQlen " + printQueue.length)
+                // console.log("j " + j)
+                // console.log("Sending out " + j + " " + printQueue[j-1])
+                msg.channel.send("```" + j + " " + printQueue[j-1] + "```");
+              }
+            }
           });
         }
-      }
+        // msg.channel.send(server.queue);
       }
     } else {
       if (link.includes("www.youtube.com/" || "https://youtu.be/")) {
