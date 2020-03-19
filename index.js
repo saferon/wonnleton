@@ -261,34 +261,35 @@ bot.on('message', async msg => {
 //////////////////////////////////////////////////////////////////////////////////
 // music stuff ///////////////////////////////////////////////////////////////////
 // this needs a lot of work lmfao ////////////////////////////////////////////////
-  if (command === 'radio') {
-    var songList = fs.readdirSync(songPath);
-    var index = songList.indexOf("desktop.ini");
-    songList.splice(index, 1);
-    var randomFolder = randomIndex(songList.length);
-    var chosenFolder = fs.readdirSync(songPath + songList[randomFolder]);
-    var songFolder = randomIndex(chosenFolder.length);
-    console.log("-------------------------");
-    console.log("playing from album " + songList[randomFolder]);
-    console.log(chosenFolder[songFolder]);
-    if (msg.member.voiceChannel) {
-      msg.member.voiceChannel.join().then(connection => {
-        connection.playFile(  // if song breaks add in var playaudio = 
-          songPath + songList[randomFolder] + "/" + chosenFolder[songFolder]
-        );
-        msg.channel.send(
-          "Now playing: " +
-            songList[randomFolder] +
-            " - " +
-            chosenFolder[songFolder]
-        );
-      });
-    } else {
-      msg.channel.send("Not in a channel mate.");
-    }
-  };
 
-  if (command === 'play') {
+  // if (command === 'radio') {  // quoted out while it isn't working too well
+  //   var songList = fs.readdirSync(songPath);
+  //   var index = songList.indexOf("desktop.ini");
+  //   songList.splice(index, 1);
+  //   var randomFolder = randomIndex(songList.length);
+  //   var chosenFolder = fs.readdirSync(songPath + songList[randomFolder]);
+  //   var songFolder = randomIndex(chosenFolder.length);
+  //   console.log("-------------------------");
+  //   console.log("playing from album " + songList[randomFolder]);
+  //   console.log(chosenFolder[songFolder]);
+  //   if (msg.member.voiceChannel) {
+  //     msg.member.voiceChannel.join().then(connection => {
+  //       connection.playFile(  // if song breaks add in var playaudio = 
+  //         songPath + songList[randomFolder] + "/" + chosenFolder[songFolder]
+  //       );
+  //       msg.channel.send(
+  //         "Now playing: " +
+  //           songList[randomFolder] +
+  //           " - " +
+  //           chosenFolder[songFolder]
+  //       );
+  //     });
+  //   } else {
+  //     msg.channel.send("Not in a channel mate.");
+  //   }
+  // };
+
+  if (command === 'play' || 'p') {
     function play(connection, msg) {
       var server = queued[msg.guild.id];
       server.dispatcher = connection.playStream(ytdl(server.queue[0], {filter: "audioonly"}));
@@ -315,16 +316,16 @@ bot.on('message', async msg => {
     })
   }
 
-  if (command === 'queue') {
+  if (command === 'queue' || 'q') {
     var link = args[0]
     console.log(link)
-    if (!link || !link.includes("www.youtube.com/" || "https://youtu.be/")) return msg.reply("You need to give a youtube link to play.")
+    if (link && !link.includes("www.youtube.com/" || "https://youtu.be/")) return msg.reply("You need to give a youtube link to play.")
     if (!msg.member.voiceChannel) return msg.reply("You must be in a voice channel.")
     if (!queued[msg.guild.id]) queued[msg.guild.id] = {
       queue: []
     }
     var server = queued[msg.guild.id];
-    if (!args[0]) { 
+    if (!link) { 
       msg.channel.send(server.queue);
       return;
     } else {
@@ -337,7 +338,7 @@ bot.on('message', async msg => {
     var server = queued[msg.guild.id];
     if (server.dispatcher) server.dispatcher.end();
     msg.channel.send("Skipped.")
-  }
+  };
 
   if (command === 'stop') {
     var server = queued[msg.guild.id];
@@ -353,7 +354,7 @@ bot.on('message', async msg => {
       console.log("disconnected")
       msg.guild.voiceChannel.disconnect();
     }
-  }
+  };
 
 
 //////////////////////////////////////////////////////////////////////////////////
