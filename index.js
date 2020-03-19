@@ -303,7 +303,7 @@ bot.on('message', async msg => {
       })
     }
     var link = args[0]
-    console.log("playing" + link)
+    console.log("playing " + link)
     if (!server.queue) {
       if (!link || !link.includes("www.youtube.com/" || "https://youtu.be/")) {
         msg.reply("You need to give a youtube link to play.")
