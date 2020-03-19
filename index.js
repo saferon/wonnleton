@@ -14,7 +14,7 @@ const songPath = "/media/pi/8A02-DF82/songs/";
 const ytdl = require("ytdl-core")
 // cooldowns
 let cooldown = new Set();
-let cdFiveSec = 5;
+let cdSec = 3;
 let dayCooldown = new Set();
 let cdDay = 3600 // an hour   86400; // a day
 
@@ -152,7 +152,7 @@ bot.on('message', async msg => {
 
   setTimeout(() => {
     cooldown.delete(msg.author.id);
-  }, cdFiveSec * 1000)
+  }, cdSec * 1000)
   
 //////////////////////////////////////////////////////////////////////////////////
 //profile thing///////////////////////////////////////////////////////////////////
