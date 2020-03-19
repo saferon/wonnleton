@@ -399,7 +399,10 @@ bot.on('message', async msg => {
 
   if (command === 'nowplaying' || command === 'np') {
     var server = queued[msg.guild.id];
-    if (server.dispatcher) {
+    if (!queued[msg.guild.id]) queued[msg.guild.id] = {
+      queue: []
+    }
+    if (!server || server.queue.length === 0) {
       ytdl.getInfo(server.queue[0], function(err, info) {
         if (err) throw err
         msg.channel.send("Now playing " + info.title)
