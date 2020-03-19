@@ -343,15 +343,16 @@ bot.on('message', async msg => {
         for (var i = 0; i < server.queue.length; i++) {
             ytdl.getInfo(server.queue[i], function(err, info) {
             if (err) throw err
-            var positions = info.title;
-            console.log("in the for loop " + positions);
-            printQueue.push(positions);
             if (i === server.queue.length) {
               for (var j = 1; j <= printQueue.length; j++) {
                 console.log("Sending out " + j + " " + printQueue[j-1])
                 msg.channel.send("```" + j + " " + printQueue[j-1] + "```");
               }
             }
+            var positions = info.title;
+            console.log("in the for loop " + positions);
+            printQueue.push(positions);
+            
           });
         }
         // msg.channel.send(server.queue);
