@@ -347,9 +347,9 @@ bot.on('message', async msg => {
             ytdl.getInfo(server.queue[i], function(err, info) {
             if (err) throw err
             var positions = info.title;
-            console.log("in the for loop " + positions);
-          });
-          msg.channel.send("```" + j + " " + positions + "```");
+            console.log("queue position " + j + " - " + positions);
+            msg.channel.send("```" + j + " - " + positions + "```");
+          }); 
         }
       }
     } else {
