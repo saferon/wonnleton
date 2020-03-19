@@ -303,7 +303,8 @@ bot.on('message', async msg => {
 
   if (command === 'play') {
     link = args[0]
-    if (!link || !['www.youtube.com/'].includes(link)) return msg.reply("You need to give a youtube link to play.")
+    console.log(link)
+    if (!link || !link.includes("www.youtube.com/")) return msg.reply("You need to give a youtube link to play.")
     if (!msg.member.voiceChannel) return msg.reply("You must be in a voice channel.")
     if (!queued[msg.guild.id]) queued[msg.guild.id] = {
       queue: []
