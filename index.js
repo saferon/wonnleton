@@ -291,13 +291,13 @@ bot.on('message', async msg => {
   
 
   if (command === 'play') {
-    function play(connection, message) {
+    function play(connection, msg) {
       var server = queued[msg.guild.id];
       server.dispatcher = connection.playStream(ytdl(queued.queue[0], {filter: "audioonly"}));
       server.queue.shift();
       server.dispatcher.on("end", function(){
         if (server.queue[0]){
-          play(connection, message);
+          play(connection, msg);
         } else {
           connection.disconnect();
         }
