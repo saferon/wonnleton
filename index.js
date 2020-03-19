@@ -343,13 +343,15 @@ bot.on('message', async msg => {
       if (!server || server.queue.length === 0) { // updated
         msg.channel.send("Queue is empty!");
       } else {
-        for (var i = 0, j = 1; i < server.queue.length; i++, j++) {
+        printQ = []
+        for (var i = 0; i < server.queue.length; i++) {
             ytdl.getInfo(server.queue[i], function(err, info) {
             if (err) throw err
             var positions = info.title;
-            console.log("queue position " + j + " - " + positions);
-            msg.channel.send("```" + j + " - " + positions + "```");
+            console.log("queue position " + i+1 + " - " + positions);
+            printQ.push("`" + j+1 + " - " + positions + "`");
           }); 
+        msg.channel.send(printQ)
         }
       }
     } else {
