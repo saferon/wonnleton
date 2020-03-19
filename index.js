@@ -343,9 +343,9 @@ bot.on('message', async msg => {
         for (var i = 0; i < server.queue.length; i++) {
             ytdl.getInfo(server.queue[i], function(err, info) {
             if (err) throw err
-            var position = i + 1
+            var position = i
             var positions = info.title
-            var posi = position + positions
+            var posi = position + " - " +positions
             console.log("in the for loop " + posi)
             printQueue.push(posi)
             if (i === server.queue.length - 1) {
