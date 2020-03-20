@@ -111,7 +111,7 @@ bot.on('message', async msg => {
 
   if (AP[msg.author.id].AP < 0) {
     AP[msg.author.id].AP = 0
-    msg.reply("You have run out of AP coin, you now have " + AP[msg.author.id].AP + " AP coin.")
+    msg.reply(`You have run out of AP coin, you now have ${AP[msg.author.id].AP} AP coin.`)
   };
 
   fs.writeFile("./AP.json", JSON.stringify(AP), (err) => {
@@ -299,8 +299,8 @@ bot.on('message', async msg => {
       server.dispatcher = connection.playStream(ytdl(server.queue[0], {filter: "audioonly"}));
       ytdl.getInfo(server.queue[0], function(err, info) {
         if (err) throw err
-        console.log("now playing " + info.title)
-        msg.channel.send("Now playing " + info.title)
+        console.log(`now playing ${info.title}`)
+        msg.channel.send(`Now playing ${info.title}`)
       })
       // console.log("Now Playing "+ title);
       server.queue.shift();
@@ -343,17 +343,8 @@ bot.on('message', async msg => {
       if (!server || server.queue.length === 0) { // updated
         msg.channel.send("Queue is empty!");
       } else {
-        printQ = []
-        for (var i = 0; i < server.queue.length; i++) {
-            ytdl.getInfo(server.queue[i], function(err, info) {
-            if (err) throw err
-            var positions = info.title;
-            var position = i + 1
-            console.log("queue position " + position + " - " + positions);
-            printQ.push("`"+ position + " - " + positions +  "`");
-          }); 
-        }
-        msg.channel.send(printQ)
+        // this needs lots of fixes better to take a fresh start haha...
+        msg.channel.send(server.queue);
       }
     } else {
       if (link.includes("www.youtube.com/" || "https://youtu.be/")) {
@@ -361,7 +352,7 @@ bot.on('message', async msg => {
           queue: []
         }
         server.queue.push(link);
-        console.log("queued " + link)
+        console.log(`queued ${link}`)
         msg.channel.send("Added to the queue!") 
       } else {
         msg.reply("You need to give a youtube link to play.")
@@ -421,7 +412,7 @@ bot.on('message', async msg => {
       } else {
         ytdl.getInfo(server.queue[0], function(err, info) {
           if (err) throw err
-          msg.channel.send("Now playing " + info.title)
+          msg.channel.send(`Now playing ${info.title}`)
       })}
   };
 
@@ -446,16 +437,16 @@ bot.on('message', async msg => {
     var roll2 = die[Math.floor(Math.random() * die.length)];
     var roll = roll1 + roll2
     var winnings = amount * 2;
-    msg.reply("You threw down " + amount + " AP coin, for a chance to win " + winnings + " AP coin.")
-    msg.channel.send("You rolled " + roll + " 🎲🎲");
+    msg.reply(`You threw down ${amount} AP coin, for a chance to win ${winnings} AP coin.`)
+    msg.channel.send(`You rolled ${roll} 🎲🎲`);
     if (roll === 7 || roll === 11) {
-      msg.channel.send("Bill it up, you gained " + winnings + " AP coin. 💰");
+      msg.channel.send(`Bill it up, you gained ${winnings} AP coin. 💰`);
       AP[msg.author.id].AP += winnings;
     } else if (roll === 2 || roll === 3 || roll === 12) {
-      msg.channel.send("You man lost " + amount + " AP coin.");
+      msg.channel.send(`You man lost ${amount} AP coin.`);
       AP[msg.author.id].AP -= amount;
       // negativeAP(AP[msg.author.id].AP);
-      msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
+      msg.channel.send(`You now have ${AP[msg.author.id].AP} AP coin.`);
     } else {
       msg.channel.send("Rolling again.")
       while (roll != 0) {
@@ -463,18 +454,18 @@ bot.on('message', async msg => {
       var rolls1 = die[Math.floor(Math.random() * die.length)]
       var rolls2 = die[Math.floor(Math.random() * die.length)]
       var rolls = rolls1 + rolls2
-      msg.channel.send("Rolled " + rolls + ".").then(msg => {msg.delete(3000)});
+      msg.channel.send(`Rolled ${rolls}.`).then(msg => {msg.delete(3000)});
       if (rolls === 7) {
         msg.channel.send("You've rolled a 7 and lost.");
         AP[msg.author.id].AP -= amount;
         // negativeAP(AP[msg.author.id].AP);
-        msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
+        msg.channel.send(`You now have ${AP[msg.author.id].AP} AP coin.`);
         break;
       }
       if (rolls === roll) {
-        msg.channel.send("You've rolled another " + roll + ". You win. 💰");
+        msg.channel.send(`You've rolled another ${roll}. You win. 💰`);
         AP[msg.author.id].AP += winnings;
-        msg.channel.send("You now have " + AP[msg.author.id].AP + " AP coin.");
+        msg.channel.send(`You now have ${AP[msg.author.id].AP} AP coin.`);
         break;
       }
     } 
