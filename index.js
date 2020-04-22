@@ -14,7 +14,7 @@ const songPath = "/media/pi/8A02-DF82/songs/";
 const ytdl = require("ytdl-core")
 // cooldowns
 let cooldown = new Set();
-let cdSec = 3;
+let cdSec = 2;
 let dayCooldown = new Set();
 let cdDay = 3600 // an hour   86400; // a day
 
@@ -31,6 +31,8 @@ var queued = {};
 bot.on("ready", () => {
   console.log("WONNLETON HAS RISEN");
 });
+
+bot.on('error', console.error);  // handle that random error HAHA 
 
 //////////////////////////////////////////////////////////////////////////////////
 //functions //////////////////////////////////////////////////////////////////////
